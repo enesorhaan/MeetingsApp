@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlpataMeetings.Data\AlpataMeetings.Data.csproj" />
+    <ProjectReference Include="..\MeetingsApp.Data\MeetingsApp.Data.csproj" />
   </ItemGroup>
 
 </Project>

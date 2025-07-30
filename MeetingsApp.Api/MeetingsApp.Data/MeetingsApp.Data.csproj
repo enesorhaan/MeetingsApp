@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlpataMeetings.Model\AlpataMeetings.Model.csproj" />
+    <ProjectReference Include="..\MeetingsApp.Model\MeetingsApp.Model.csproj" />
   </ItemGroup>
 
 </Project>
