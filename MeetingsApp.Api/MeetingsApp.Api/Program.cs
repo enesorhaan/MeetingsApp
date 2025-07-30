@@ -42,7 +42,8 @@ builder.Services.AddAuthentication(options =>
 
 // Register services
 builder.Services.AddScoped<TokenService>();
-builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+builder.Services.AddScoped<IFileStorageService, FileStorageService>(); 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Add services to the container.
 
@@ -69,7 +70,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => 
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
-        c.RoutePrefix = "api-docs";
     });
 }
 

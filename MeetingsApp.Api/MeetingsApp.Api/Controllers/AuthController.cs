@@ -13,11 +13,13 @@ namespace MeetingsApp.Api.Controllers
     {
         private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
+        private readonly IEmailService _emailService;
 
-        public AuthController(AppDbContext context, TokenService tokenService)
+        public AuthController(AppDbContext context, TokenService tokenService, IEmailService emailService)
         {
             _context = context;
             _tokenService = tokenService;
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -35,6 +37,7 @@ namespace MeetingsApp.Api.Controllers
                 Email = dto.Email,
                 Phone = dto.Phone,
                 PasswordHash = hashedPassword,
+                ProfileImagePath = dto.PhotoPath ?? string.Empty
             };
 
             _context.Users.Add(user);
@@ -42,12 +45,9 @@ namespace MeetingsApp.Api.Controllers
 
             var token = _tokenService.GenerateToken(user.Id, user.Email, $"{user.FirstName} {user.LastName}");
 
-            return Ok(new UserResponseDto
-            {
-                FullName = $"{user.FirstName} {user.LastName}",
-                Email = user.Email,
-                Token = token
-            });
+            await _emailService.SendWelcomeEmailAsync(user.Email, $"{user.FirstName} {user.LastName}");
+
+            return Ok("Kullanıcı başarıyla oluşturuldu!");
         }
 
         [HttpPost("login")]
