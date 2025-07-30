@@ -1,0 +1,3 @@
+# MeetingsApp
+
+Full-stack .NET Core + Angular uygulaması. Kullanıcı kayıt, toplantı yönetimi, JWT Auth ve çok daha fazlası...

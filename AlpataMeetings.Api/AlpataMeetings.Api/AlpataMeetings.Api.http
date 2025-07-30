@@ -1,0 +1,6 @@
+@AlpataMeetings.Api_HostAddress = http://localhost:5016
+
+GET {{AlpataMeetings.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
