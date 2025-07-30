@@ -1,7 +1,9 @@
+using MeetingsApp.Api.Helpers.Swagger;
 using MeetingsApp.Api.Services;
 using MeetingsApp.Data.Context;
 using MeetingsApp.Model.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -38,7 +40,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Register services
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 
 // Add services to the container.
 
@@ -52,17 +56,20 @@ builder.Services.AddSwaggerGen(options =>
         Title = "MeetingsApp API",
         Version = "v1"
     });
+
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(options =>
+    app.UseSwaggerUI(c => 
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
-        options.RoutePrefix = "swagger";
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
+        c.RoutePrefix = "api-docs";
     });
 }
 

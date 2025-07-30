@@ -8,6 +8,7 @@
         public string Email { get; set; } // unique
         public string Phone { get; set; }
         public string PasswordHash { get; set; }
+        public string ProfileImagePath { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
