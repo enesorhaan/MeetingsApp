@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlpataMeetings.Api.Controllers
+namespace MeetingsApp.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

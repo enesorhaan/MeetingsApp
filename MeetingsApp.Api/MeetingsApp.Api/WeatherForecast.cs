@@ -1,4 +1,4 @@
-namespace AlpataMeetings.Api
+namespace MeetingsApp.Api
 {
     public class WeatherForecast
     {
