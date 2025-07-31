@@ -1,6 +1,6 @@
 ﻿using MeetingsApp.Api.Services;
 using MeetingsApp.Data.Context;
-using MeetingsApp.Model.Dtos;
+using MeetingsApp.Model.Dtos.User;
 using MeetingsApp.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

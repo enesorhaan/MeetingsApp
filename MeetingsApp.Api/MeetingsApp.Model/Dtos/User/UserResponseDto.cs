@@ -1,4 +1,4 @@
-﻿namespace MeetingsApp.Model.Dtos
+﻿namespace MeetingsApp.Model.Dtos.User
 {
     public class UserResponseDto
     {

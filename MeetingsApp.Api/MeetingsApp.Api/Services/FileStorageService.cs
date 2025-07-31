@@ -9,6 +9,11 @@
             return await SaveFileAsync("Profile", file);
         }
 
+        public async Task<string> SaveDocumentAsync(IFormFile file)
+        {
+            return await SaveFileAsync("Document", file);
+        }
+
         private async Task<string> SaveFileAsync(string category, IFormFile file)
         {
             string date = DateTime.Now.ToString("yyyyMMdd");

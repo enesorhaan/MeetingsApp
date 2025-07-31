@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MeetingsApp.Model.Dtos
+namespace MeetingsApp.Model.Dtos.User
 {
     public class UserLoginDto
     {

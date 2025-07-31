@@ -3,5 +3,6 @@
     public interface IFileStorageService
     {
         Task<string> SaveProfileImageAsync(IFormFile file);
+        Task<string> SaveDocumentAsync(IFormFile file);
     }
 }

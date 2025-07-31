@@ -20,7 +20,7 @@ namespace MeetingsApp.Api.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim("userId", userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim("FullName", fullName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

@@ -6,6 +6,7 @@ using MeetingsApp.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
@@ -21,6 +22,7 @@ builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("Toke
 var tokenSettings = builder.Configuration.GetSection("TokenSettings").Get<TokenSettings>();
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddAuthentication(options =>
 {
@@ -47,6 +49,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IFileStorageService, FileStorageService>(); 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IMeetingService, MeetingService>();
 
 // Add services to the container.
 
@@ -59,6 +62,26 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "MeetingsApp API",
         Version = "v1"
+    });
+
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Erp.Api Management for IT Company",
+        Description = "Enter JWT Bearer token **_only_**",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { securityScheme, new string[] { } }
     });
 
     options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());

@@ -5,23 +5,35 @@ namespace MeetingsApp.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PhotoController : ControllerBase
+    public class FileStorageController : ControllerBase
     {
         private readonly IFileStorageService _fileStorageService;
 
-        public PhotoController(IFileStorageService fileStorageService)
+        public FileStorageController(IFileStorageService fileStorageService)
         {
             _fileStorageService = fileStorageService;
         }
 
-        [HttpPost("upload")]
+        [HttpPost("photo-upload")]
         [RequestSizeLimit(5_000_000)] 
-        public async Task<IActionResult> Upload([FromForm] FileUploadRequest model)
+        public async Task<IActionResult> PhotoUpload([FromForm] FileUploadRequest model)
         {
             if (model.File == null || model.File.Length == 0)
                 return BadRequest("Dosya yüklenemedi.");
 
             var savedPath = await _fileStorageService.SaveProfileImageAsync(model.File);
+
+            return Ok(new { path = savedPath });
+        }
+
+        [HttpPost("document-upload")]
+        [RequestSizeLimit(5_000_000)]
+        public async Task<IActionResult> DocumentUpload([FromForm] FileUploadRequest model)
+        {
+            if (model.File == null || model.File.Length == 0)
+                return BadRequest("Dosya yüklenemedi.");
+
+            var savedPath = await _fileStorageService.SaveDocumentAsync(model.File);
 
             return Ok(new { path = savedPath });
         }
