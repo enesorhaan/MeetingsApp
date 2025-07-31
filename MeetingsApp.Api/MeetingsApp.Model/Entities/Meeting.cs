@@ -11,5 +11,6 @@
         public string? FilePath { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public Guid PublicLinkGuid { get; set; } = Guid.NewGuid();
+        public bool IsCanceled { get; set; } = false;
     }
 }

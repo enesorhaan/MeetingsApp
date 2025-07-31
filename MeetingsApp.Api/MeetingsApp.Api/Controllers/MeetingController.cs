@@ -99,6 +99,16 @@ namespace MeetingsApp.Api.Controllers
             return NoContent();
         }
 
+        [HttpDelete("hard/{id}")]
+        public async Task<IActionResult> HardDelete(int id)
+        {
+            var deleted = await _meetingService.HardDeleteAsync(id);
+            if (!deleted)
+                return NotFound("Toplantı bulunamadı.");
+
+            return NoContent();
+        }
+
         [HttpGet("join/{guid}")]
         public async Task<IActionResult> JoinMeeting(Guid guid)
         {

@@ -11,6 +11,7 @@ namespace MeetingsApp.Api.Services
         Task<MeetingResponseDto> CreateAsync(MeetingCreateDto dto, int userId);
         Task<bool> UpdateAsync(MeetingUpdateDto dto, int userId);
         Task<bool> DeleteAsync(int id);
+        Task<bool> HardDeleteAsync(int id);
         Task InviteAsync(int meetingId, List<string> emailList);
     }
 }

@@ -139,8 +139,23 @@ namespace MeetingsApp.Api.Services
             if (meeting == null)
                 return false;
 
+            meeting.IsCanceled = true;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> HardDeleteAsync(int id)
+        {
+            var meeting = await _context.Meetings.FindAsync(id);
+            if (meeting == null)
+                return false;
+
+
             _context.Meetings.Remove(meeting);
             await _context.SaveChangesAsync();
+
             return true;
         }
 

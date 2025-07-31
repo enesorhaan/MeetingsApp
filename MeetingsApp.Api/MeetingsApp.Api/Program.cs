@@ -1,3 +1,4 @@
+using MeetingsApp.Api.BackgroundJobs;
 using MeetingsApp.Api.Helpers.Swagger;
 using MeetingsApp.Api.Middleware;
 using MeetingsApp.Api.Services;
@@ -61,6 +62,8 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IFileStorageService, FileStorageService>(); 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
+
+builder.Services.AddHostedService<CanceledMeetingCleanupWorker>();
 
 // Add services to the container.
 
