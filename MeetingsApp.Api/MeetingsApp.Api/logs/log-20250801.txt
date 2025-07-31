@@ -1,0 +1,46 @@
+2025-08-01 00:52:46.044 +03:00 [INF] User profile is available. Using 'C:\Users\Enes Orhan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-08-01 00:52:46.289 +03:00 [INF] Now listening on: http://localhost:5016
+2025-08-01 00:52:46.383 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-08-01 00:52:46.383 +03:00 [INF] Hosting environment: Development
+2025-08-01 00:52:46.383 +03:00 [INF] Content root path: C:\Users\Enes Orhan\Desktop\Alpata\AlpataMeetingsApp\MeetingsApp.Api\MeetingsApp.Api
+2025-08-01 00:52:48.690 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/_vs/browserLink - null null
+2025-08-01 00:52:48.690 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/_framework/aspnetcore-browser-refresh.js - null null
+2025-08-01 00:52:48.710 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/_framework/aspnetcore-browser-refresh.js - 200 13766 application/javascript; charset=utf-8 26.2106ms
+2025-08-01 00:52:48.752 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/_vs/browserLink - 200 null text/javascript; charset=UTF-8 70.0486ms
+2025-08-01 00:52:48.791 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/swagger/v1/swagger.json - null null
+2025-08-01 00:52:48.841 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 50.423ms
+2025-08-01 00:52:52.143 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/Auth/login - application/json 57
+2025-08-01 00:52:52.160 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-01 00:52:52.162 +03:00 [INF] HeartBeat
+2025-08-01 00:52:52.164 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-01 00:52:52.179 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-08-01 00:52:52.255 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-01 00:52:52.280 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-01 00:52:53.593 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-01 00:52:53.619 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-08-01 00:52:53.627 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 1342.0905ms
+2025-08-01 00:52:53.627 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-01 00:52:53.629 +03:00 [INF] -------------Request-Begin------------
+2025-08-01 00:52:53.629 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/Auth/login 
+QueryString:  
+Request Body: {
+  "email": "user@example.com",
+  "password": "string"
+}
+2025-08-01 00:52:53.630 +03:00 [INF] 
+
+2025-08-01 00:52:53.630 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/Auth/login 
+QueryString:  
+StatusCode: 401 
+Response Body: Kullanıcı bulunamadı.
+2025-08-01 00:52:53.630 +03:00 [INF] -------------Request-End------------
+2025-08-01 00:52:53.637 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/Auth/login - 401 null text/plain; charset=utf-8 1494.7364ms

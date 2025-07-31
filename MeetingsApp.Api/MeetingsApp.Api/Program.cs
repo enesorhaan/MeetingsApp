@@ -1,16 +1,27 @@
 using MeetingsApp.Api.Helpers.Swagger;
+using MeetingsApp.Api.Middleware;
 using MeetingsApp.Api.Services;
 using MeetingsApp.Data.Context;
 using MeetingsApp.Model.Auth;
+using MeetingsApp.Model.Logger;
 using MeetingsApp.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IO;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Serilog
+builder.Host.UseSerilog();
 
 // MSSQL connection string
 string connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
@@ -98,6 +109,18 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
     });
 }
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<HeartBeatMiddleware>();
+Action<RequestProfilerModel> requestResponseHandler = requestProfilerModel =>
+{
+    Log.Information("-------------Request-Begin------------");
+    Log.Information(requestProfilerModel.Request);
+    Log.Information(Environment.NewLine);
+    Log.Information(requestProfilerModel.Response);
+    Log.Information("-------------Request-End------------");
+};
+app.UseMiddleware<RequestLoggingMiddleware>(requestResponseHandler);
 
 app.UseHttpsRedirection();
 
