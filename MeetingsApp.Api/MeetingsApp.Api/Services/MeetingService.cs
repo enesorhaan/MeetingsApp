@@ -77,18 +77,20 @@ namespace MeetingsApp.Api.Services
 
         public async Task<MeetingResponseDto> CreateAsync(MeetingCreateDto dto, int userId)
         {
-            if (dto.EndTime <= dto.StartTime)
-                throw new ArgumentException("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
+            var calculatedEndTime = dto.StartTime.AddMinutes(dto.DurationInMinutes);
+
+            if (calculatedEndTime <= DateTime.UtcNow)
+                throw new ArgumentException("Toplantı geçmişte olamaz.");
 
             var meeting = new Meeting
             {
                 Title = dto.Title,
                 Description = dto.Description,
                 StartTime = dto.StartTime,
-                EndTime = dto.EndTime,
+                EndTime = calculatedEndTime,
                 FilePath = dto.FilePath,
                 CreatedByUserId = userId,
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 PublicLinkGuid = Guid.NewGuid()
             };
 
@@ -111,8 +113,10 @@ namespace MeetingsApp.Api.Services
 
         public async Task<bool> UpdateAsync(MeetingUpdateDto dto, int userId)
         {
-            if (dto.EndTime <= dto.StartTime)
-                throw new ArgumentException("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
+            var calculatedEndTime = dto.StartTime.AddMinutes(dto.DurationInMinutes);
+
+            if (calculatedEndTime <= DateTime.UtcNow)
+                throw new ArgumentException("Toplantı geçmişte olamaz.");
 
             var meeting = await _context.Meetings.FindAsync(dto.Id);
 
@@ -122,7 +126,7 @@ namespace MeetingsApp.Api.Services
             meeting.Title = dto.Title;
             meeting.Description = dto.Description;
             meeting.StartTime = dto.StartTime;
-            meeting.EndTime = dto.EndTime;
+            meeting.EndTime = calculatedEndTime;
             meeting.FilePath = dto.FilePath;
 
             await _context.SaveChangesAsync();

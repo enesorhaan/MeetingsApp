@@ -14,8 +14,8 @@ namespace MeetingsApp.Model.Dtos.Meeting
         [Required(ErrorMessage = "Başlangıç zamanı zorunludur.")]
         public DateTime StartTime { get; set; }
 
-        [Required(ErrorMessage = "Bitiş zamanı zorunludur.")]
-        public DateTime EndTime { get; set; }
+        [Required(ErrorMessage = "Toplantı süresi zorunludur.")]
+        public int DurationInMinutes { get; set; }
         public string? FilePath { get; set; }
     }
 
@@ -36,6 +36,7 @@ namespace MeetingsApp.Model.Dtos.Meeting
     {
         public int CreatedByUserId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime EndTime { get; set; }
         public string PublicLink { get; set; } 
     }
 }

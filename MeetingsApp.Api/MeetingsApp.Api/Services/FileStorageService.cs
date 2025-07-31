@@ -16,7 +16,7 @@
 
         private async Task<string> SaveFileAsync(string category, IFormFile file)
         {
-            string date = DateTime.Now.ToString("yyyyMMdd");
+            string date = DateTime.UtcNow.ToString("yyyyMMdd");
             string directory = Path.Combine(_basePath, category, date);
             Directory.CreateDirectory(directory);
 

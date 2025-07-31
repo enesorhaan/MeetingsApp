@@ -45,9 +45,20 @@ namespace MeetingsApp.Api.Controllers
             if (userId == null) 
                 return Unauthorized();
 
-            var result = await _meetingService.CreateAsync(dto, userId.Value);
-
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            try
+            {
+                var result = await _meetingService.CreateAsync(dto, userId.Value);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // Loglama yapılabilir
+                return StatusCode(500, new { Message = "Sunucu hatası oluştu.", Detail = ex.Message });
+            }
         }
 
         [HttpPut]
@@ -58,10 +69,22 @@ namespace MeetingsApp.Api.Controllers
             if (userId == null)
                 return Unauthorized();
 
-            var updated = await _meetingService.UpdateAsync(dto, userId.Value);
+            try
+            {
+                var updated = await _meetingService.UpdateAsync(dto, userId.Value);
 
-            if (!updated)
-                return NotFound("Toplantı bulunamadı veya kullanıcı yetkisiz.");
+                if (!updated)
+                    return NotFound("Toplantı bulunamadı veya kullanıcı yetkisiz.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // Loglama yapılabilir
+                return StatusCode(500, new { Message = "Sunucu hatası oluştu.", Detail = ex.Message });
+            }
 
             return NoContent();
         }
