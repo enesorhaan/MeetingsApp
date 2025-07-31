@@ -2,10 +2,11 @@ using MeetingsApp.Api.Helpers.Swagger;
 using MeetingsApp.Api.Services;
 using MeetingsApp.Data.Context;
 using MeetingsApp.Model.Auth;
+using MeetingsApp.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<MeetingsApp.Data.Context.AppDbContext>(ops => ops.
 // JWT Settings Binding
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 var tokenSettings = builder.Configuration.GetSection("TokenSettings").Get<TokenSettings>();
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddAuthentication(options =>
 {
