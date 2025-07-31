@@ -1,4 +1,6 @@
-﻿namespace MeetingsApp.Model.Entities
+﻿using MeetingsApp.Model.Enums;
+
+namespace MeetingsApp.Model.Entities
 {
     public class User
     {
@@ -10,5 +12,6 @@
         public string PasswordHash { get; set; }
         public string ProfileImagePath { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public UserRole Role { get; set; } = UserRole.User;
     }
 }
