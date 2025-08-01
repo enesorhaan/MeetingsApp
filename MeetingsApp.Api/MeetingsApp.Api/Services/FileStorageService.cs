@@ -2,7 +2,13 @@
 {
     public class FileStorageService : IFileStorageService
     {
+        private readonly IWebHostEnvironment _env;
         private readonly string _basePath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+        public FileStorageService(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
 
         public async Task<string> SaveProfileImageAsync(IFormFile file)
         {
@@ -16,7 +22,7 @@
 
         private async Task<string> SaveFileAsync(string category, IFormFile file)
         {
-            string date = DateTime.UtcNow.ToString("yyyyMMdd");
+            string date = DateTime.Now.ToString("yyyyMMdd");
             string directory = Path.Combine(_basePath, category, date);
             Directory.CreateDirectory(directory);
 
@@ -27,6 +33,15 @@
             await file.CopyToAsync(stream);
 
             return Path.Combine("Uploads", category, date, fileName).Replace("\\", "/");
+        }
+
+        public async Task<byte[]> GetFileAsync(string relativePath)
+        {
+            var fullPath = Path.Combine(_env.WebRootPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("Dosya bulunamadı.", fullPath);
+
+            return await File.ReadAllBytesAsync(fullPath);
         }
     }
 }

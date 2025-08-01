@@ -1,0 +1,752 @@
+2025-08-02 00:06:00.994 +03:00 [INF] User profile is available. Using 'C:\Users\Enes Orhan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-08-02 00:06:01.076 +03:00 [INF] CleanupWorker sleeping for 173.98214449666668 minutes.
+2025-08-02 00:06:01.459 +03:00 [INF] Now listening on: http://localhost:5016
+2025-08-02 00:06:01.749 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-08-02 00:06:01.750 +03:00 [INF] Hosting environment: Development
+2025-08-02 00:06:01.750 +03:00 [INF] Content root path: C:\Users\Enes Orhan\Desktop\Alpata\AlpataMeetingsApp\MeetingsApp.Api\MeetingsApp.Api
+2025-08-02 00:06:03.888 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/_vs/browserLink - null null
+2025-08-02 00:06:03.889 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/_framework/aspnetcore-browser-refresh.js - null null
+2025-08-02 00:06:03.995 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/_framework/aspnetcore-browser-refresh.js - 200 13766 application/javascript; charset=utf-8 112.6722ms
+2025-08-02 00:06:04.045 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/_vs/browserLink - 200 null text/javascript; charset=UTF-8 164.0605ms
+2025-08-02 00:06:04.088 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/swagger/v1/swagger.json - null null
+2025-08-02 00:06:04.145 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 57.4214ms
+2025-08-02 00:07:16.101 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:07:16.136 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:07:16.139 +03:00 [INF] HeartBeat
+2025-08-02 00:07:16.140 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:07:16.156 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-08-02 00:07:16.343 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:07:16.372 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:07:18.363 +03:00 [INF] Executed DbCommand (80ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:07:18.428 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:07:18.459 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 2083.1312ms
+2025-08-02 00:07:18.460 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:07:18.463 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:07:18.463 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:07:18.463 +03:00 [INF] 
+
+2025-08-02 00:07:18.463 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:07:18.464 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:07:18.476 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 2379.0244ms
+2025-08-02 00:09:34.363 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - null null
+2025-08-02 00:09:34.380 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:34.401 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - 204 null null 38.1203ms
+2025-08-02 00:09:34.405 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/auth/login - application/json 58
+2025-08-02 00:09:34.408 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:34.409 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:09:34.409 +03:00 [INF] HeartBeat
+2025-08-02 00:09:34.409 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:09:34.419 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:09:34.440 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-02 00:09:34.702 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-02 00:09:35.221 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-08-02 00:09:35.226 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 785.291ms
+2025-08-02 00:09:35.226 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:09:35.227 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:09:35.227 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+Request Body: {"Email":"enesorhan_1366@hotmail.com","Password":"123456"}
+2025-08-02 00:09:35.227 +03:00 [INF] 
+
+2025-08-02 00:09:35.227 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+StatusCode: 401 
+Response Body: Şifre hatalı.
+2025-08-02 00:09:35.227 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:09:35.227 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/auth/login - 401 null text/plain; charset=utf-8 822.4169ms
+2025-08-02 00:09:39.156 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/auth/login - application/json 59
+2025-08-02 00:09:39.157 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:39.157 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:09:39.157 +03:00 [INF] HeartBeat
+2025-08-02 00:09:39.157 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:09:39.162 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:09:39.163 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-02 00:09:39.411 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-02 00:09:40.011 +03:00 [INF] Executing OkObjectResult, writing value of type 'MeetingsApp.Model.Dtos.User.UserResponseDto'.
+2025-08-02 00:09:40.013 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 849.6002ms
+2025-08-02 00:09:40.013 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:09:40.014 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:09:40.014 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+Request Body: {"Email":"enesorhan_1366@hotmail.com","Password":"orhan44"}
+2025-08-02 00:09:40.014 +03:00 [INF] 
+
+2025-08-02 00:09:40.014 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+StatusCode: 200 
+Response Body: {"fullName":"Enes Orhan","email":"enesorhan_1366@hotmail.com","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiZW1haWwiOiJlbmVzb3JoYW5fMTM2NkBob3RtYWlsLmNvbSIsIkZ1bGxOYW1lIjoiRW5lcyBPcmhhbiIsImp0aSI6IjcwYWZjMDU3LWUxZTUtNGE5ZC04M2Y3LWUyZjRmOGM4OWE5MCIsImV4cCI6MTc1NDA4NjE3OSwiaXNzIjoiTWVldGluZ3NBcHAuQXBpIiwiYXVkIjoiTWVldGluZ3NBcHAuQXBpIn0._kFLaa2cEWS-rILXdlFkami6YSg9yXZaqergnPgCc5E","photoPath":"Uploads/Profile/20250731/c2a7fb24-0f11-4d10-b50b-4d640701a823.png"}
+2025-08-02 00:09:40.014 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:09:40.014 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/auth/login - 200 null application/json; charset=utf-8 858.2354ms
+2025-08-02 00:09:40.195 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:09:40.202 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:40.207 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 12.1396ms
+2025-08-02 00:09:40.215 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:09:40.215 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:40.216 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:09:40.216 +03:00 [INF] HeartBeat
+2025-08-02 00:09:40.216 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:09:40.241 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:09:40.242 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:09:40.285 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:09:40.286 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:09:40.286 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 44.6005ms
+2025-08-02 00:09:40.286 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:09:40.287 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:09:40.287 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:09:40.287 +03:00 [INF] 
+
+2025-08-02 00:09:40.287 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:09:40.288 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:09:40.289 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 74.0917ms
+2025-08-02 00:09:43.278 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:09:43.278 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:09:43.279 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:09:43.279 +03:00 [INF] HeartBeat
+2025-08-02 00:09:43.279 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:09:43.282 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:09:43.282 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:09:43.397 +03:00 [INF] Executed DbCommand (68ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:09:43.401 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:09:43.402 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 119.687ms
+2025-08-02 00:09:43.402 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:09:43.402 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:09:43.402 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:09:43.402 +03:00 [INF] 
+
+2025-08-02 00:09:43.402 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:09:43.402 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:09:43.403 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 125.1139ms
+2025-08-02 00:10:41.143 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting - null null
+2025-08-02 00:10:41.145 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:10:41.150 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting - 204 null null 3.3412ms
+2025-08-02 00:10:41.154 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/meeting - application/json 101
+2025-08-02 00:10:41.155 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:10:41.155 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:10:41.155 +03:00 [INF] HeartBeat
+2025-08-02 00:10:41.155 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:10:41.157 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.Create (MeetingsApp.Api)'
+2025-08-02 00:10:41.162 +03:00 [INF] Route matched with {action = "Create", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(MeetingsApp.Model.Dtos.Meeting.MeetingCreateDto) on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:10:41.315 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000), @p5='?' (DbType = Boolean), @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime2), @p8='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Meetings] ([CreatedAt], [CreatedByUserId], [Description], [EndTime], [FilePath], [IsCanceled], [PublicLinkGuid], [StartTime], [Title])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2025-08-02 00:10:41.348 +03:00 [INF] Executing CreatedAtActionResult, writing value of type 'MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto'.
+2025-08-02 00:10:41.370 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.Create (MeetingsApp.Api) in 207.4884ms
+2025-08-02 00:10:41.370 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.Create (MeetingsApp.Api)'
+2025-08-02 00:10:41.370 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:10:41.370 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting 
+QueryString:  
+Request Body: {"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10","durationInMinutes":60}
+2025-08-02 00:10:41.370 +03:00 [INF] 
+
+2025-08-02 00:10:41.370 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting 
+QueryString:  
+StatusCode: 201 
+Response Body: {"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164+03:00","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":0,"filePath":null}
+2025-08-02 00:10:41.370 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:10:41.370 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/meeting - 201 null application/json; charset=utf-8 218.5297ms
+2025-08-02 00:10:41.400 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:10:41.400 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:10:41.401 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6135ms
+2025-08-02 00:10:41.405 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:10:41.405 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:10:41.405 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:10:41.405 +03:00 [INF] HeartBeat
+2025-08-02 00:10:41.406 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:10:41.408 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:10:41.408 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:10:41.418 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:10:41.423 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:10:41.424 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 15.2665ms
+2025-08-02 00:10:41.424 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:10:41.424 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:10:41.424 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:10:41.424 +03:00 [INF] 
+
+2025-08-02 00:10:41.424 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:10:41.424 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:10:41.425 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 19.8318ms
+2025-08-02 00:11:36.329 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:11:36.329 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:11:36.330 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.9158ms
+2025-08-02 00:11:36.369 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:11:36.370 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:11:36.370 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:11:36.370 +03:00 [INF] HeartBeat
+2025-08-02 00:11:36.370 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:11:36.370 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:11:36.371 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:11:36.399 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:11:36.400 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:11:36.400 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 29.3678ms
+2025-08-02 00:11:36.400 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:11:36.400 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:11:36.400 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:11:36.401 +03:00 [INF] 
+
+2025-08-02 00:11:36.401 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:11:36.401 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:11:36.401 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 31.7069ms
+2025-08-02 00:11:59.891 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:11:59.891 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:11:59.892 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.8219ms
+2025-08-02 00:11:59.926 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:11:59.926 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:11:59.926 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:11:59.926 +03:00 [INF] HeartBeat
+2025-08-02 00:11:59.926 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:11:59.927 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:11:59.928 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:11:59.976 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:11:59.977 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:11:59.978 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 49.992ms
+2025-08-02 00:11:59.978 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:11:59.979 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:11:59.979 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:11:59.979 +03:00 [INF] 
+
+2025-08-02 00:11:59.979 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:11:59.979 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:11:59.979 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 53.2178ms
+2025-08-02 00:12:18.635 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:12:18.635 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:18.636 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 1.2419ms
+2025-08-02 00:12:18.639 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:12:18.639 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:18.639 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:12:18.639 +03:00 [INF] HeartBeat
+2025-08-02 00:12:18.639 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:12:18.639 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:18.640 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:12:18.652 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:12:18.652 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:12:18.652 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 12.7665ms
+2025-08-02 00:12:18.653 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:18.653 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:12:18.653 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:12:18.653 +03:00 [INF] 
+
+2025-08-02 00:12:18.653 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:12:18.653 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:12:18.653 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 14.3285ms
+2025-08-02 00:12:31.815 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:12:31.815 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:31.816 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6793ms
+2025-08-02 00:12:31.818 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:12:31.818 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:31.818 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:12:31.818 +03:00 [INF] HeartBeat
+2025-08-02 00:12:31.818 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:12:31.819 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:31.819 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:12:31.826 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:12:31.827 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:12:31.827 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 8.3093ms
+2025-08-02 00:12:31.827 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:31.827 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:12:31.827 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:12:31.827 +03:00 [INF] 
+
+2025-08-02 00:12:31.827 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:12:31.827 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:12:31.828 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 9.8576ms
+2025-08-02 00:12:47.961 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:12:47.962 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:47.963 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.7618ms
+2025-08-02 00:12:48.000 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:12:48.001 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:48.001 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:12:48.001 +03:00 [INF] HeartBeat
+2025-08-02 00:12:48.001 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:12:48.002 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:48.002 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:12:48.045 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:12:48.047 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:12:48.049 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 47.0398ms
+2025-08-02 00:12:48.050 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:48.050 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:12:48.050 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:12:48.050 +03:00 [INF] 
+
+2025-08-02 00:12:48.050 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:12:48.050 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:12:48.050 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 49.9147ms
+2025-08-02 00:12:55.148 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - null null
+2025-08-02 00:12:55.148 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:55.149 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - 204 null null 0.527ms
+2025-08-02 00:12:55.149 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/auth/login - application/json 59
+2025-08-02 00:12:55.150 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:55.150 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:12:55.150 +03:00 [INF] HeartBeat
+2025-08-02 00:12:55.150 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:12:55.150 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:12:55.150 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-02 00:12:55.167 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-02 00:12:55.310 +03:00 [INF] Executing OkObjectResult, writing value of type 'MeetingsApp.Model.Dtos.User.UserResponseDto'.
+2025-08-02 00:12:55.310 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 159.6372ms
+2025-08-02 00:12:55.310 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:12:55.310 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:12:55.310 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+Request Body: {"Email":"enesorhan_1366@hotmail.com","Password":"orhan44"}
+2025-08-02 00:12:55.310 +03:00 [INF] 
+
+2025-08-02 00:12:55.310 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+StatusCode: 200 
+Response Body: {"fullName":"Enes Orhan","email":"enesorhan_1366@hotmail.com","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiZW1haWwiOiJlbmVzb3JoYW5fMTM2NkBob3RtYWlsLmNvbSIsIkZ1bGxOYW1lIjoiRW5lcyBPcmhhbiIsImp0aSI6ImIzNmI1NzVjLWRiNTAtNDlkYS1iZDcxLTNlNjMzMDVkODk1OCIsImV4cCI6MTc1NDA4NjM3NSwiaXNzIjoiTWVldGluZ3NBcHAuQXBpIiwiYXVkIjoiTWVldGluZ3NBcHAuQXBpIn0.r3WD4rvQ3GsnB4JipdgfVhZAgegjxzjSfNqJVv5Y5xk","photoPath":"Uploads/Profile/20250731/c2a7fb24-0f11-4d10-b50b-4d640701a823.png"}
+2025-08-02 00:12:55.310 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:12:55.311 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/auth/login - 200 null application/json; charset=utf-8 161.399ms
+2025-08-02 00:12:55.330 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:12:55.330 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:55.330 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6529ms
+2025-08-02 00:12:55.336 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:12:55.341 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:12:55.343 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:12:55.343 +03:00 [INF] HeartBeat
+2025-08-02 00:12:55.348 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:12:55.349 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:55.349 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:12:55.358 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:12:55.358 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:12:55.358 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 9.2311ms
+2025-08-02 00:12:55.358 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:12:55.359 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:12:55.359 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:12:55.359 +03:00 [INF] 
+
+2025-08-02 00:12:55.359 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:12:55.359 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:12:55.359 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 24.7397ms
+2025-08-02 00:13:21.093 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:13:21.093 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:13:21.093 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6315ms
+2025-08-02 00:13:21.125 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:13:21.125 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:13:21.125 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:13:21.127 +03:00 [INF] HeartBeat
+2025-08-02 00:13:21.127 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:13:21.132 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:13:21.132 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:13:21.137 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:13:21.138 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:13:21.138 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 5.5117ms
+2025-08-02 00:13:21.138 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:13:21.138 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:13:21.138 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:13:21.138 +03:00 [INF] 
+
+2025-08-02 00:13:21.138 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:13:21.138 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:13:21.138 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 14.2904ms
+2025-08-02 00:14:25.537 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - null null
+2025-08-02 00:14:25.538 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:25.538 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/auth/login - 204 null null 1.226ms
+2025-08-02 00:14:25.543 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/auth/login - application/json 58
+2025-08-02 00:14:25.545 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:25.547 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:14:25.547 +03:00 [INF] HeartBeat
+2025-08-02 00:14:25.547 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:14:25.549 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:14:25.549 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-02 00:14:25.559 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-02 00:14:25.706 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-08-02 00:14:25.706 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 156.737ms
+2025-08-02 00:14:25.706 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:14:25.706 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:14:25.706 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+Request Body: {"Email":"enesorhan_1366@hotmail.com","Password":"123456"}
+2025-08-02 00:14:25.706 +03:00 [INF] 
+
+2025-08-02 00:14:25.706 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+StatusCode: 401 
+Response Body: Şifre hatalı.
+2025-08-02 00:14:25.706 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:14:25.707 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/auth/login - 401 null text/plain; charset=utf-8 163.8249ms
+2025-08-02 00:14:29.052 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5016/api/auth/login - application/json 59
+2025-08-02 00:14:29.056 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:29.056 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:14:29.056 +03:00 [INF] HeartBeat
+2025-08-02 00:14:29.056 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:14:29.056 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:14:29.057 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(MeetingsApp.Model.Dtos.User.UserLoginDto) on controller MeetingsApp.Api.Controllers.AuthController (MeetingsApp.Api).
+2025-08-02 00:14:29.067 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__dto_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[Phone], [u].[ProfileImagePath], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-08-02 00:14:29.287 +03:00 [INF] Executing OkObjectResult, writing value of type 'MeetingsApp.Model.Dtos.User.UserResponseDto'.
+2025-08-02 00:14:29.287 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api) in 229.744ms
+2025-08-02 00:14:29.287 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.AuthController.Login (MeetingsApp.Api)'
+2025-08-02 00:14:29.288 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:14:29.288 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+Request Body: {"Email":"enesorhan_1366@hotmail.com","Password":"orhan44"}
+2025-08-02 00:14:29.288 +03:00 [INF] 
+
+2025-08-02 00:14:29.288 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/auth/login 
+QueryString:  
+StatusCode: 200 
+Response Body: {"fullName":"Enes Orhan","email":"enesorhan_1366@hotmail.com","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiZW1haWwiOiJlbmVzb3JoYW5fMTM2NkBob3RtYWlsLmNvbSIsIkZ1bGxOYW1lIjoiRW5lcyBPcmhhbiIsImp0aSI6IjQwMzE2M2U0LTQ2OTYtNDllMC1hOTg2LTg2NTBhYWIxZjcyYSIsImV4cCI6MTc1NDA4NjQ2OSwiaXNzIjoiTWVldGluZ3NBcHAuQXBpIiwiYXVkIjoiTWVldGluZ3NBcHAuQXBpIn0.QfFL38w1O8daQ1-5jHLjzDs2LDsTVizvplBHX_RnloM","photoPath":"Uploads/Profile/20250731/c2a7fb24-0f11-4d10-b50b-4d640701a823.png"}
+2025-08-02 00:14:29.288 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:14:29.288 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5016/api/auth/login - 200 null application/json; charset=utf-8 236.4ms
+2025-08-02 00:14:29.392 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:14:29.392 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:29.392 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6335ms
+2025-08-02 00:14:29.397 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:14:29.397 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:29.397 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:14:29.397 +03:00 [INF] HeartBeat
+2025-08-02 00:14:29.397 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:14:29.398 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:14:29.399 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:14:29.416 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:14:29.417 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:14:29.418 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 18.837ms
+2025-08-02 00:14:29.418 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:14:29.418 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:14:29.418 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:14:29.418 +03:00 [INF] 
+
+2025-08-02 00:14:29.418 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:14:29.418 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:14:29.419 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 22.071ms
+2025-08-02 00:14:59.975 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:14:59.975 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:14:59.976 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.6043ms
+2025-08-02 00:14:59.983 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:15:00.093 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:15:00.093 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:15:00.093 +03:00 [INF] HeartBeat
+2025-08-02 00:15:00.093 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:15:00.094 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:15:00.095 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:15:00.245 +03:00 [INF] Executed DbCommand (148ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:15:00.247 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:15:00.247 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 152.6787ms
+2025-08-02 00:15:00.247 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:15:00.247 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:15:00.248 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:15:00.248 +03:00 [INF] 
+
+2025-08-02 00:15:00.248 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:15:00.248 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:15:00.248 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 264.5874ms
+2025-08-02 00:15:17.210 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:15:17.210 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:15:17.210 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 0.564ms
+2025-08-02 00:15:17.322 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:15:17.322 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:15:17.322 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:15:17.322 +03:00 [INF] HeartBeat
+2025-08-02 00:15:17.322 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:15:17.331 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:15:17.337 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:15:17.350 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:15:17.352 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:15:17.352 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 14.8286ms
+2025-08-02 00:15:17.352 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:15:17.352 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:15:17.352 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:15:17.352 +03:00 [INF] 
+
+2025-08-02 00:15:17.352 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:15:17.352 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:15:17.352 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 41.9411ms
+2025-08-02 00:18:55.510 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - null null
+2025-08-02 00:18:55.511 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:18:55.511 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5016/api/meeting/my-meetings - 204 null null 4.0075ms
+2025-08-02 00:18:55.575 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - application/json null
+2025-08-02 00:18:55.603 +03:00 [INF] CORS policy execution successful.
+2025-08-02 00:18:55.604 +03:00 [INF] LogErrorHandlerMiddleware.Invoke
+2025-08-02 00:18:55.604 +03:00 [INF] HeartBeat
+2025-08-02 00:18:55.604 +03:00 [INF] LogRequestLoggingMiddleware.Invoke
+2025-08-02 00:18:55.606 +03:00 [INF] Executing endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:18:55.607 +03:00 [INF] Route matched with {action = "GetAllByUser", controller = "Meeting"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllByUser() on controller MeetingsApp.Api.Controllers.MeetingController (MeetingsApp.Api).
+2025-08-02 00:18:55.659 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Title], [m].[Description], [m].[StartTime], [m].[EndTime], [m].[FilePath], [m].[CreatedByUserId], [m].[CreatedAt], [m].[PublicLinkGuid], [m].[IsCanceled]
+FROM [Meetings] AS [m]
+WHERE [m].[CreatedByUserId] = @__userId_0
+ORDER BY [m].[StartTime] DESC
+2025-08-02 00:18:55.660 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[MeetingsApp.Model.Dtos.Meeting.MeetingResponseDto, MeetingsApp.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-08-02 00:18:55.661 +03:00 [INF] Executed action MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api) in 54.2738ms
+2025-08-02 00:18:55.661 +03:00 [INF] Executed endpoint 'MeetingsApp.Api.Controllers.MeetingController.GetAllByUser (MeetingsApp.Api)'
+2025-08-02 00:18:55.661 +03:00 [INF] -------------Request-Begin------------
+2025-08-02 00:18:55.661 +03:00 [INF] Http Request Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+Request Body: 
+2025-08-02 00:18:55.661 +03:00 [INF] 
+
+2025-08-02 00:18:55.661 +03:00 [INF] Http Response Information: 
+Schema:http 
+Host: localhost:5016 
+Path: /api/meeting/my-meetings 
+QueryString:  
+StatusCode: 200 
+Response Body: [{"createdByUserId":1,"createdAt":"2025-08-02T00:10:41.1752164","endTime":"2025-08-02T02:10:00","publicLink":"http://localhost:5016/meeting/join/2d2d5e98-33a7-4f70-a614-c561d2dc8d45","isCanceled":false,"id":11,"title":"test4","description":"test4 sdsddsc","startTime":"2025-08-02T01:10:00","durationInMinutes":60,"filePath":null},{"createdByUserId":1,"createdAt":"2025-08-01T23:31:15.4739268","endTime":"2025-08-01T23:53:00","publicLink":"http://localhost:5016/meeting/join/58d0b771-26ff-4799-af29-13e6167e4c1a","isCanceled":false,"id":10,"title":"test3","description":"test3333333","startTime":"2025-08-01T23:38:00","durationInMinutes":15,"filePath":"Uploads/Document/20250801/ebcb3ea1-3247-40c8-8ab3-4171e2c7c93a.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T18:45:26.0089905","endTime":"2025-08-01T23:45:00","publicLink":"http://localhost:5016/meeting/join/efcf7fd9-4055-45c3-b7bd-c38727364013","isCanceled":false,"id":8,"title":"web test","description":"aciklama test","startTime":"2025-08-01T22:45:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/764bdecd-f82c-49c3-8b1f-e7b84be80325.pdf"},{"createdByUserId":1,"createdAt":"2025-08-01T20:22:19.4677762","endTime":"2025-08-01T23:10:00","publicLink":"http://localhost:5016/meeting/join/312f88e2-595f-4aa8-9886-cddbb9600e3a","isCanceled":false,"id":9,"title":"test2","description":"test2 toplantı","startTime":"2025-08-01T22:10:00","durationInMinutes":60,"filePath":"Uploads/Document/20250801/3688cdd4-0169-4b30-9ce4-b15dd74563d6.pdf"}]
+2025-08-02 00:18:55.661 +03:00 [INF] -------------Request-End------------
+2025-08-02 00:18:55.662 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5016/api/meeting/my-meetings - 200 null application/json; charset=utf-8 86.9147ms

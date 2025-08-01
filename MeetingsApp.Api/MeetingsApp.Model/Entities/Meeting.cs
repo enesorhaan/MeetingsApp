@@ -9,7 +9,7 @@
         public DateTime EndTime { get; set; }
         public int CreatedByUserId { get; set; }
         public string? FilePath { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public Guid PublicLinkGuid { get; set; } = Guid.NewGuid();
         public bool IsCanceled { get; set; } = false;
     }

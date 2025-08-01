@@ -32,7 +32,10 @@ namespace MeetingsApp.Api.Services
                     EndTime = meeting.EndTime,
                     FilePath = meeting.FilePath,
                     CreatedByUserId = meeting.CreatedByUserId,
-                    CreatedAt = meeting.CreatedAt
+                    CreatedAt = meeting.CreatedAt,
+                    PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                    DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
+                    IsCanceled = meeting.IsCanceled
                 }).ToListAsync();
         }
 
@@ -50,7 +53,10 @@ namespace MeetingsApp.Api.Services
                     EndTime = meeting.EndTime,
                     FilePath = meeting.FilePath,
                     CreatedByUserId = meeting.CreatedByUserId,
-                    CreatedAt = meeting.CreatedAt
+                    CreatedAt = meeting.CreatedAt,
+                    PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                    DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
+                    IsCanceled = meeting.IsCanceled
                 })
                 .ToListAsync();
         }
@@ -71,7 +77,10 @@ namespace MeetingsApp.Api.Services
                 EndTime = meeting.EndTime,
                 FilePath = meeting.FilePath,
                 CreatedByUserId = meeting.CreatedByUserId,
-                CreatedAt = meeting.CreatedAt
+                CreatedAt = meeting.CreatedAt,
+                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
+                IsCanceled = meeting.IsCanceled
             };
         }
 
@@ -79,7 +88,7 @@ namespace MeetingsApp.Api.Services
         {
             var calculatedEndTime = dto.StartTime.AddMinutes(dto.DurationInMinutes);
 
-            if (calculatedEndTime <= DateTime.UtcNow)
+            if (calculatedEndTime <= DateTime.Now)
                 throw new ArgumentException("Toplantı geçmişte olamaz.");
 
             var meeting = new Meeting
@@ -90,7 +99,7 @@ namespace MeetingsApp.Api.Services
                 EndTime = calculatedEndTime,
                 FilePath = dto.FilePath,
                 CreatedByUserId = userId,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.Now,
                 PublicLinkGuid = Guid.NewGuid()
             };
 
@@ -115,7 +124,7 @@ namespace MeetingsApp.Api.Services
         {
             var calculatedEndTime = dto.StartTime.AddMinutes(dto.DurationInMinutes);
 
-            if (calculatedEndTime <= DateTime.UtcNow)
+            if (calculatedEndTime <= DateTime.Now)
                 throw new ArgumentException("Toplantı geçmişte olamaz.");
 
             var meeting = await _context.Meetings.FindAsync(dto.Id);

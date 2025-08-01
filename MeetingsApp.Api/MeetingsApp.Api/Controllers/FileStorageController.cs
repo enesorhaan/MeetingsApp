@@ -1,5 +1,6 @@
 ﻿using MeetingsApp.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace MeetingsApp.Api.Controllers
 {
@@ -38,9 +39,37 @@ namespace MeetingsApp.Api.Controllers
             return Ok(new { path = savedPath });
         }
 
+        [HttpGet("get-file")]
+        public IActionResult GetFile([FromQuery] string path)
+        {
+            try
+            {
+                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), path.Replace('/', Path.DirectorySeparatorChar));
+                if (!System.IO.File.Exists(fullPath))
+                    return NotFound("Dosya bulunamadı.");
+
+                var contentType = GetContentType(fullPath);
+                var fileName = Path.GetFileName(fullPath);
+                return PhysicalFile(fullPath, contentType, fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Bir hata oluştu: {ex.Message}");
+            }
+        }
+
         public class FileUploadRequest
         {
             public IFormFile File { get; set; }
+        }
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(path, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
     }
 }

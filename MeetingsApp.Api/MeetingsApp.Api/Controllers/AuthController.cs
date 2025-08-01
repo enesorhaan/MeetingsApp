@@ -67,7 +67,8 @@ namespace MeetingsApp.Api.Controllers
             {
                 FullName = $"{user.FirstName} {user.LastName}",
                 Email = user.Email,
-                Token = token
+                Token = token,
+                PhotoPath = user.ProfileImagePath
             });
         }
     }

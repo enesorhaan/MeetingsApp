@@ -11,7 +11,7 @@ namespace MeetingsApp.Model.Entities
         public string Phone { get; set; }
         public string PasswordHash { get; set; }
         public string ProfileImagePath { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public UserRole Role { get; set; } = UserRole.User;
     }
 }

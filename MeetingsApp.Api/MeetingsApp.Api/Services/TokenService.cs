@@ -33,7 +33,7 @@ namespace MeetingsApp.Api.Services
                 issuer: _tokenSettings.Issuer,
                 audience: _tokenSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_tokenSettings.ExpireMinutes),
+                expires: DateTime.Now.AddMinutes(_tokenSettings.ExpireMinutes),
                 signingCredentials: creds
             );
 

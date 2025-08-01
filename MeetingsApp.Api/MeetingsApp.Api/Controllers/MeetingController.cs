@@ -27,6 +27,18 @@ namespace MeetingsApp.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("my-meetings")]
+        public async Task<IActionResult> GetAllByUser()
+        {
+            var userId = User.GetUserId();
+
+            if (userId == null)
+                return Unauthorized();
+
+            var result = await _meetingService.GetAllByUserIdAsync(userId.Value);
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

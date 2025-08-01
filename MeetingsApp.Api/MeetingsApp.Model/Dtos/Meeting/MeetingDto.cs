@@ -37,6 +37,7 @@ namespace MeetingsApp.Model.Dtos.Meeting
         public int CreatedByUserId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime EndTime { get; set; }
-        public string PublicLink { get; set; } 
+        public string PublicLink { get; set; }
+        public bool IsCanceled { get; set; }
     }
 }
