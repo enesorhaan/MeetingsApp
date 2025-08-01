@@ -1,5 +1,5 @@
-<div class="invite-modal-overlay" *ngIf="isVisible">
-  <div class="invite-modal">
+<div class="invite-modal-overlay" *ngIf="isVisible" (click)="onCloseModal()">
+  <div class="invite-modal" (click)="$event.stopPropagation()">
     <div class="invite-modal-header">
       <h2>📧 Toplantıya Davet Et</h2>
       <button class="close-button" (click)="onCloseModal()">

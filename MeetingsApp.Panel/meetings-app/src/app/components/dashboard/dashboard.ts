@@ -113,21 +113,20 @@ export class DashboardComponent implements OnInit {
   }
 
   inviteToMeeting(meeting: Meeting): void {
-    const emails = prompt('Davet edilecek email adreslerini virgülle ayırarak girin:');
-    if (emails) {
-      const emailList = emails.split(',').map(email => email.trim());
-      this.meetingService.inviteToMeeting({
-        meetingId: meeting.id!,
-        emailList: emailList
-      }).subscribe({
-        next: () => {
-          alert('Davetler gönderildi.');
-        },
-        error: (error) => {
-          alert('Davet gönderilirken hata oluştu.');
-        }
-      });
-    }
+    // This function is no longer needed as invite modal state is removed
+    // The logic for inviting users should be handled by the meeting detail modal
+    // or a separate invite functionality if needed.
+    console.log('Invite to meeting functionality is temporarily disabled.');
+    // For now, we'll just open the meeting detail modal
+    this.openMeetingModal(meeting);
+  }
+
+  onInviteModalClose(): void {
+    // This function is no longer needed
+  }
+
+  onInvitationsSent(): void {
+    // This function is no longer needed
   }
 
   isOrganizer(meeting: Meeting): boolean {
@@ -159,7 +158,7 @@ export class DashboardComponent implements OnInit {
 
   getMeetingStatusClass(meeting: Meeting): string {
     if (meeting.isCanceled) {
-      return 'status-canceled';
+      return 'status-cancelled';
     }
     
     const now = new Date();
@@ -173,6 +172,12 @@ export class DashboardComponent implements OnInit {
     } else {
       return 'status-completed';
     }
+  }
+
+  isCompletedMeeting(meeting: Meeting): boolean {
+    const now = new Date();
+    const endTime = new Date(meeting.endTime);
+    return now > endTime;
   }
 
   logout(): void {

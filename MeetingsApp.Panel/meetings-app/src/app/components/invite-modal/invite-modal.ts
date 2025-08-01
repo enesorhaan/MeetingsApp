@@ -112,11 +112,8 @@ export class InviteModalComponent implements OnInit, OnDestroy, OnChanges {
           const alertMessage = `${emails.length} davetiye başarıyla gönderildi!`;
           this.showAlert(alertMessage, 'success');
           
-          // 500ms sonra modal'ı kapat ve dashboard'a yönlendir
-          setTimeout(() => {
-            this.invitationsSent.emit();
-            this.onCloseModal();
-          }, 500);
+          // Hemen modal'ı kapat
+          this.invitationsSent.emit();
         },
         error: (err) => {
           this.loading = false;
@@ -131,11 +128,8 @@ export class InviteModalComponent implements OnInit, OnDestroy, OnChanges {
             const alertMessage = `${emails.length} davetiye başarıyla gönderildi!`;
             this.showAlert(alertMessage, 'success');
             
-            // 500ms sonra modal'ı kapat ve dashboard'a yönlendir
-            setTimeout(() => {
-              this.invitationsSent.emit();
-              this.onCloseModal();
-            }, 500);
+            // Hemen modal'ı kapat
+            this.invitationsSent.emit();
             return;
           } else if (err.status === 400) {
             errorMessage = err.error || 'Geçersiz email adresleri.';

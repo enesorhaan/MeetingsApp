@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { MeetingService } from '../../services/meeting';
 import { AuthService } from '../../services/auth';
 import { Meeting } from '../../models/meeting.model';
+import { InviteModalComponent } from '../invite-modal/invite-modal';
 
 @Component({
   selector: 'app-meeting-detail-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, InviteModalComponent],
   templateUrl: './meeting-detail-modal.html',
   styleUrl: './meeting-detail-modal.scss'
 })
@@ -28,6 +29,9 @@ export class MeetingDetailModalComponent {
   cancelLoading = false; // İptal işlemi için loading
   cancelSuccess = false; // İptal başarılı mesajı için
   showCancelConfirmation = false; // Onay dialogu için
+  
+  // Davet modal state'leri
+  showInviteModal = false;
 
   constructor(
     private fb: FormBuilder,
@@ -204,6 +208,21 @@ export class MeetingDetailModalComponent {
     this.closeModal.emit();
   }
 
+  // Davet gönderme metodları
+  onInviteClicked(): void {
+    this.showInviteModal = true;
+  }
+
+  onInviteModalClose(): void {
+    this.showInviteModal = false;
+  }
+
+  onInvitationsSent(): void {
+    this.showInviteModal = false;
+    // Davet gönderildikten sonra meeting detail modal'ı da kapat
+    this.closeModal.emit();
+  }
+
   private markFormGroupTouched(): void {
     Object.keys(this.joinForm.controls).forEach(key => {
       const control = this.joinForm.get(key);
@@ -231,7 +250,22 @@ export class MeetingDetailModalComponent {
 
   // Debug için organizatör kontrolü
   isOrganizer(): boolean {
-    const currentUser = this.getCurrentUser();
-    return currentUser?.id === this.meeting?.createdByUserId;
+    const currentUser = this.authService.getCurrentUser();
+    return !!(currentUser && this.meeting && currentUser.id === this.meeting.createdByUserId);
+  }
+
+  isCompletedMeeting(): boolean {
+    if (!this.meeting) return false;
+    const now = new Date();
+    const endTime = new Date(this.meeting.endTime);
+    return now > endTime;
+  }
+
+  isOngoingMeeting(): boolean {
+    if (!this.meeting) return false;
+    const now = new Date();
+    const startTime = new Date(this.meeting.startTime);
+    const endTime = new Date(this.meeting.endTime);
+    return now >= startTime && now <= endTime;
   }
 }

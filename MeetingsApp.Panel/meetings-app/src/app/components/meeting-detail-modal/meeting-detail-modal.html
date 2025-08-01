@@ -50,7 +50,7 @@
         </div>
 
         <!-- Join Meeting Section -->
-        <div class="join-section">
+        <div class="join-section" *ngIf="!isCompletedMeeting() && !meeting.isCanceled">
           <h4>🎯 Toplantıya Katıl</h4>
           
           <!-- Authenticated User -->
@@ -149,9 +149,19 @@
         </div>
 
         <!-- Cancel Meeting (Only for organizer and future meetings) -->
-        <div class="cancel-section" *ngIf="isAuthenticated() && isOrganizer() && !meeting.isCanceled && isFutureMeeting()">
+        <div class="cancel-section" *ngIf="isAuthenticated() && isOrganizer() && !meeting.isCanceled && (isFutureMeeting() || isOngoingMeeting())">
           <hr>
           <h4>⚠️ Toplantı Yönetimi</h4>
+          
+          <!-- Davet Gönderme Butonu -->
+          <div class="invite-section">
+            <button 
+              class="invite-button"
+              (click)="onInviteClicked(); $event.stopPropagation()"
+            >
+              📧 Davet Gönder
+            </button>
+          </div>
           
           <!-- Success Message -->
           <div class="success-message" *ngIf="cancelSuccess">
@@ -216,7 +226,24 @@
             <p>Bu toplantı daha önce iptal edilmiştir.</p>
           </div>
         </div>
+
+        <!-- Completed Meeting Notice -->
+        <div class="completed-notice" *ngIf="isCompletedMeeting() && !meeting.isCanceled">
+          <hr>
+          <div class="completed-notice-content">
+            <h4>✅ Toplantı Tamamlandı</h4>
+            <p>Bu toplantı süresi dolmuş ve tamamlanmıştır.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Invite Modal -->
+  <app-invite-modal
+    [meeting]="meeting"
+    [isVisible]="showInviteModal"
+    (closeModal)="onInviteModalClose()"
+    (invitationsSent)="onInvitationsSent()"
+  ></app-invite-modal>
 </div>

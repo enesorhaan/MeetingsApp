@@ -85,6 +85,11 @@
             <p>❌ Bu toplantı iptal edilmiştir</p>
           </div>
 
+          <!-- Tamamlanan Toplantı Mesajı -->
+          <div class="completed-notice" *ngIf="!meeting.isCanceled && isCompletedMeeting(meeting)">
+            <p>✅ Bu toplantı tamamlanmıştır</p>
+          </div>
+
           <div class="meeting-actions" *ngIf="!meeting.isCanceled">
             <button 
               class="action-button primary"
@@ -96,6 +101,7 @@
             <button 
               class="action-button secondary"
               (click)="joinMeetingByLink(); $event.stopPropagation()"
+              *ngIf="!isCompletedMeeting(meeting)"
             >
               🚀 Katıl
             </button>
