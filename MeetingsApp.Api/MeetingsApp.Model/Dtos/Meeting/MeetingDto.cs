@@ -7,7 +7,6 @@ namespace MeetingsApp.Model.Dtos.Meeting
         [Required(ErrorMessage = "Başlık zorunludur.")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Açıklama zorunludur.")]
         [StringLength(500, ErrorMessage = "En fazla 500 karakter olabilir.")]
         public string Description { get; set; }
 
