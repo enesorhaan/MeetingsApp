@@ -1,0 +1,73 @@
+<div class="login-container">
+  <div class="login-background">
+    <div class="background-pattern"></div>
+  </div>
+  
+  <div class="login-card">
+    <div class="logo-section">
+      <div class="logo">
+        <span class="logo-icon">📅</span>
+        <h1 class="logo-text">Meetings App</h1>
+      </div>
+      <p class="tagline">Toplantılarınızı kolayca yönetin</p>
+    </div>
+    
+    <h2>Giriş Yap</h2>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            placeholder="Email adresinizi girin"
+            [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">Email gereklidir</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">Geçerli bir email adresi girin</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            placeholder="Şifrenizi girin"
+            [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Şifre gereklidir</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-alert" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="loginForm.invalid || isLoading"
+        class="submit-btn"
+      >
+        <span *ngIf="!isLoading">Giriş Yap</span>
+        <span *ngIf="isLoading">Giriş yapılıyor...</span>
+      </button>
+    </form>
+
+    <div class="register-link">
+      <p>Hesabınız yok mu? <a (click)="goToRegister()">Kayıt olun</a></p>
+    </div>
+  </div>
+</div>

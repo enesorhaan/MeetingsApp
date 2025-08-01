@@ -1,0 +1,125 @@
+<div class="meeting-form-container">
+  <div class="meeting-form-card">
+    <div class="form-header">
+      <h1>Yeni Toplantı Oluştur</h1>
+      <p>Toplantı detaylarını doldurun</p>
+    </div>
+
+    <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()" class="meeting-form">
+      <div class="form-group">
+        <label for="title">Toplantı Başlığı *</label>
+        <input 
+          type="text" 
+          id="title" 
+          formControlName="title" 
+          placeholder="Toplantı başlığını giriniz"
+          [class.error]="meetingForm.get('title')?.invalid && meetingForm.get('title')?.touched"
+        />
+        <div class="error-message" *ngIf="meetingForm.get('title')?.invalid && meetingForm.get('title')?.touched">
+          <span *ngIf="meetingForm.get('title')?.errors?.['required']">Toplantı başlığı gereklidir</span>
+          <span *ngIf="meetingForm.get('title')?.errors?.['minlength']">Başlık en az 3 karakter olmalıdır</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Açıklama *</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          placeholder="Toplantı açıklamasını giriniz"
+          rows="4"
+          [class.error]="meetingForm.get('description')?.invalid && meetingForm.get('description')?.touched"
+        ></textarea>
+        <div class="error-message" *ngIf="meetingForm.get('description')?.invalid && meetingForm.get('description')?.touched">
+          <span *ngIf="meetingForm.get('description')?.errors?.['required']">Açıklama gereklidir</span>
+          <span *ngIf="meetingForm.get('description')?.errors?.['minlength']">Açıklama en az 10 karakter olmalıdır</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startTime">Başlangıç Zamanı *</label>
+          <input 
+            type="datetime-local" 
+            id="startTime" 
+            formControlName="startTime"
+            [class.error]="meetingForm.get('startTime')?.invalid && meetingForm.get('startTime')?.touched"
+          />
+          <div class="error-message" *ngIf="meetingForm.get('startTime')?.invalid && meetingForm.get('startTime')?.touched">
+            <span *ngIf="meetingForm.get('startTime')?.errors?.['required']">Başlangıç zamanı gereklidir</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="durationInMinutes">Süre (Dakika) *</label>
+          <input 
+            type="number" 
+            id="durationInMinutes" 
+            formControlName="durationInMinutes"
+            min="15"
+            max="480"
+            [class.error]="meetingForm.get('durationInMinutes')?.invalid && meetingForm.get('durationInMinutes')?.touched"
+          />
+          <div class="error-message" *ngIf="meetingForm.get('durationInMinutes')?.invalid && meetingForm.get('durationInMinutes')?.touched">
+            <span *ngIf="meetingForm.get('durationInMinutes')?.errors?.['required']">Süre gereklidir</span>
+            <span *ngIf="meetingForm.get('durationInMinutes')?.errors?.['min']">Süre en az 15 dakika olmalıdır</span>
+            <span *ngIf="meetingForm.get('durationInMinutes')?.errors?.['max']">Süre en fazla 480 dakika olmalıdır</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="file">Dosya Ekle (Opsiyonel)</label>
+        <div class="file-input-wrapper">
+          <input 
+            type="file" 
+            id="file" 
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
+            [disabled]="loading"
+          />
+          <div class="file-info" *ngIf="selectedFile">
+            <span class="file-name">📎 {{ selectedFile.name }}</span>
+            <span class="file-size">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
+          </div>
+        </div>
+        <small class="file-help">Desteklenen formatlar: PDF, DOC, DOCX, PPT, PPTX, TXT</small>
+      </div>
+
+      <!-- Upload Progress -->
+      <div class="upload-progress" *ngIf="loading && selectedFile">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+        </div>
+        <span class="progress-text">{{ uploadProgress }}% yüklendi</span>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-alert" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="cancel-button" 
+          (click)="cancel()"
+          [disabled]="loading"
+        >
+          İptal
+        </button>
+        <button 
+          type="submit" 
+          class="submit-button" 
+          [disabled]="meetingForm.invalid || loading"
+        >
+          <span *ngIf="!loading">Toplantı Oluştur</span>
+          <span *ngIf="loading">
+            <span *ngIf="selectedFile && uploadProgress < 100">Dosya Yükleniyor...</span>
+            <span *ngIf="!selectedFile || uploadProgress >= 100">Oluşturuluyor...</span>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

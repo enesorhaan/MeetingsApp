@@ -1,0 +1,100 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Toplantı Yönetimi</h1>
+      <div class="user-info">
+        <span>Hoş geldiniz, {{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
+        <button class="logout-button" (click)="logout()">Çıkış Yap</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-actions">
+      <button class="create-meeting-button" (click)="createMeeting()">
+        <span>+ Yeni Toplantı Oluştur</span>
+      </button>
+      <button class="join-meeting-button" (click)="joinMeetingByLink()">
+        <span>🔗 Toplantıya Katıl</span>
+      </button>
+    </div>
+
+    <div class="meetings-section">
+      <h2>Toplantılar</h2>
+      
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="loading-spinner" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Toplantılar yükleniyor...</p>
+      </div>
+
+      <div class="meetings-grid" *ngIf="!loading && meetings.length > 0">
+        <div class="meeting-card" *ngFor="let meeting of meetings">
+          <div class="meeting-header">
+            <h3>{{ meeting.title }}</h3>
+            <span class="meeting-status" [class]="getMeetingStatusClass(meeting)">
+              {{ getMeetingStatus(meeting) }}
+            </span>
+          </div>
+          
+          <div class="meeting-details">
+            <p class="meeting-description">{{ meeting.description }}</p>
+            
+            <div class="meeting-info">
+              <div class="info-item">
+                <strong>Başlangıç:</strong> {{ formatDateTime(meeting.startTime) }}
+              </div>
+              <div class="info-item">
+                <strong>Bitiş:</strong> {{ formatDateTime(meeting.endTime) }}
+              </div>
+              <div class="info-item" *ngIf="meeting.durationInMinutes">
+                <strong>Süre:</strong> {{ meeting.durationInMinutes }} dakika
+              </div>
+              <div class="info-item" *ngIf="meeting.filePath">
+                <strong>Dosya:</strong> {{ meeting.filePath }}
+              </div>
+              <div class="info-item" *ngIf="meeting.publicLink">
+                <strong>Link:</strong> 
+                <a [href]="meeting.publicLink" target="_blank" class="meeting-link">
+                  Toplantı Linki
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="meeting-actions">
+            <button 
+              class="invite-button" 
+              *ngIf="isOrganizer(meeting)"
+              (click)="inviteToMeeting(meeting)"
+            >
+              Davet Gönder
+            </button>
+            
+            <button 
+              class="cancel-button" 
+              *ngIf="isOrganizer(meeting)"
+              (click)="cancelMeeting(meeting)"
+            >
+              Toplantıyı İptal Et
+            </button>
+            
+            <span class="organizer-badge" *ngIf="isOrganizer(meeting)">
+              Organizatör
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-meetings" *ngIf="!loading && meetings.length === 0">
+        <p>Henüz hiç toplantı bulunmuyor.</p>
+        <button class="create-meeting-button" (click)="createMeeting()">
+          İlk Toplantınızı Oluşturun
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
