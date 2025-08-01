@@ -29,6 +29,17 @@ string connectionString = builder.Configuration.GetConnectionString("MsSqlConnec
 
 builder.Services.AddDbContext<MeetingsApp.Data.Context.AppDbContext>(ops => ops.UseSqlServer(connectionString));
 
+// Cors policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 // JWT Settings Binding
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 var tokenSettings = builder.Configuration.GetSection("TokenSettings").Get<TokenSettings>();
@@ -102,6 +113,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors("CorsPolicy");
 
 if (app.Environment.IsDevelopment())
 {
