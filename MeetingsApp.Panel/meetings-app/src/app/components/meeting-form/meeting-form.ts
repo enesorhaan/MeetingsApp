@@ -31,11 +31,23 @@ export class MeetingFormComponent {
     private meetingService: MeetingService,
     private router: Router
   ) {
+    // Şu anki zamandan 15 dakika sonrasını hesapla
+    const now = new Date();
+    const defaultStartTime = new Date(now.getTime() + 15 * 60 * 1000); // 15 dakika sonra
+    
+    // datetime-local input için yerel zaman formatı: YYYY-MM-DDTHH:MM
+    const year = defaultStartTime.getFullYear();
+    const month = String(defaultStartTime.getMonth() + 1).padStart(2, '0');
+    const day = String(defaultStartTime.getDate()).padStart(2, '0');
+    const hours = String(defaultStartTime.getHours()).padStart(2, '0');
+    const minutes = String(defaultStartTime.getMinutes()).padStart(2, '0');
+    const formattedStartTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
     this.meetingForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      startTime: ['', [Validators.required, this.futureDateValidator()]],
-      durationInMinutes: [60, [Validators.required, Validators.min(15), Validators.max(480)]],
+      description: ['', []], // Zorunluluk kaldırıldı
+      startTime: [formattedStartTime, [Validators.required, this.futureDateValidator()]], // Default 15 dakika sonra
+      durationInMinutes: [30, [Validators.required, Validators.min(15), Validators.max(480)]], // Default 30 dakika
       filePath: ['']
     });
   }
@@ -65,7 +77,6 @@ export class MeetingFormComponent {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      console.log('Seçilen dosya:', file.name);
     }
   }
 
@@ -79,15 +90,12 @@ export class MeetingFormComponent {
 
       // Önce dosya yükleme işlemi
       if (this.selectedFile) {
-        console.log('Dosya yükleniyor:', this.selectedFile.name);
         this.meetingService.uploadFile(this.selectedFile).subscribe({
           next: (uploadResponse) => {
-            console.log('Dosya yükleme başarılı:', uploadResponse);
             this.uploadProgress = 100;
             this.createMeetingWithFile(formData, uploadResponse.path);
           },
           error: (err) => {
-            console.error('Dosya yükleme hatası:', err);
             this.loading = false;
             this.uploadProgress = 0;
 
@@ -125,19 +133,22 @@ export class MeetingFormComponent {
       filePath: filePath
     };
 
-    console.log('Toplantı oluşturuluyor:', meetingData);
-
     this.meetingService.createMeeting(meetingData).subscribe({
       next: (response) => {
-        console.log('Toplantı oluşturma başarılı:', response);
         this.loading = false;
         
         // Başarı modalını göster
         this.createdMeeting = response;
         this.showSuccessModal = true;
+        
+        // Eğer modal görünmezse loading'i manuel olarak sıfırla
+        setTimeout(() => {
+          if (this.loading) {
+            this.loading = false;
+          }
+        }, 3000);
       },
       error: (err) => {
-        console.error('Toplantı oluşturma hatası:', err);
         this.loading = false;
 
         if (err.status === 0) {

@@ -66,7 +66,8 @@ export class MeetingService {
 
   sendInvitations(invitationDto: MeetingInvitationDto): Observable<any> {
     return this.http.post(`${this.apiUrl}/meeting/invite`, invitationDto, {
-      headers: this.authService.getAuthHeaders()
+      headers: this.authService.getAuthHeaders(),
+      responseType: 'text'
     });
   }
 

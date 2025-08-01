@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Meeting } from '../../models/meeting.model';
 
@@ -9,13 +9,19 @@ import { Meeting } from '../../models/meeting.model';
   templateUrl: './success-modal.html',
   styleUrl: './success-modal.scss'
 })
-export class SuccessModalComponent {
+export class SuccessModalComponent implements OnChanges {
   @Input() meeting: Meeting | null = null;
   @Input() isVisible = false;
   @Output() closeModal = new EventEmitter<void>();
   @Output() inviteClicked = new EventEmitter<Meeting>();
 
   showCopyToast = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible']) {
+      // Modal visibility değiştiğinde yapılacak işlemler
+    }
+  }
 
   onCloseModal(): void {
     this.closeModal.emit();

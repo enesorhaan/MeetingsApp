@@ -1,54 +1,72 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { MeetingService } from '../../services/meeting';
 import { Meeting, MeetingInvitationDto } from '../../models/meeting.model';
 
 @Component({
   selector: 'app-invite-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './invite-modal.html',
   styleUrl: './invite-modal.scss'
 })
-export class InviteModalComponent {
+export class InviteModalComponent implements OnInit, OnDestroy, OnChanges {
   @Input() meeting: Meeting | null = null;
   @Input() isVisible = false;
   @Output() closeModal = new EventEmitter<void>();
   @Output() invitationsSent = new EventEmitter<void>();
 
-  inviteForm: FormGroup;
   loading = false;
   error = '';
   success = false;
   showCopyToast = false;
+  emailList: string[] = [''];
 
   constructor(
-    private fb: FormBuilder,
     private meetingService: MeetingService
-  ) {
-    this.inviteForm = this.fb.group({
-      emails: this.fb.array([])
-    });
-    this.addEmailField(); // İlk email alanını ekle
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
   }
 
-  get emailsArray() {
-    return this.inviteForm.get('emails') as FormArray;
-  }
-
-  addEmailField(): void {
-    const emailControl = this.fb.control('', [Validators.required, Validators.email]);
-    this.emailsArray.push(emailControl);
-  }
-
-  removeEmailField(index: number): void {
-    if (this.emailsArray.length > 1) {
-      this.emailsArray.removeAt(index);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible'] && changes['isVisible'].currentValue === true) {
+      this.initializeForm();
     }
   }
 
+  ngOnDestroy(): void {
+    this.resetForm();
+  }
+
+  private initializeForm(): void {
+    this.resetForm();
+    this.addEmailField();
+  }
+
+  private resetForm(): void {
+    this.emailList = [''];
+    this.error = '';
+    this.success = false;
+  }
+
+  addEmailField(): void {
+    this.emailList.push('');
+  }
+
+  removeEmailField(index: number): void {
+    if (this.emailList.length > 1) {
+      this.emailList.splice(index, 1);
+    }
+  }
+
+  updateEmail(index: number, value: string): void {
+    this.emailList[index] = value;
+  }
+
   onCloseModal(): void {
+    this.resetForm();
     this.closeModal.emit();
   }
 
@@ -64,19 +82,18 @@ export class InviteModalComponent {
   }
 
   onSubmit(): void {
-    if (this.inviteForm.valid && this.meeting) {
+    if (this.meeting) {
       this.loading = true;
       this.error = '';
       this.success = false;
 
       // Geçerli email'leri topla
-      const emails = this.emailsArray.controls
-        .map(control => control.value)
-        .filter(email => email && email.trim().length > 0)
-        .map(email => email.trim());
+      const emails = this.emailList
+        .map(email => email.trim())
+        .filter(email => email && email.length > 0 && this.isValidEmail(email));
 
       if (emails.length === 0) {
-        this.error = 'En az bir email adresi girmelisiniz.';
+        this.error = 'En az bir geçerli email adresi girmelisiniz.';
         this.loading = false;
         return;
       }
@@ -87,40 +104,144 @@ export class InviteModalComponent {
       };
 
       this.meetingService.sendInvitations(invitationDto).subscribe({
-        next: () => {
+        next: (response) => {
           this.loading = false;
           this.success = true;
           
-          // 2 saniye sonra modal'ı kapat
+          // Basit alert göster
+          const alertMessage = `${emails.length} davetiye başarıyla gönderildi!`;
+          this.showAlert(alertMessage, 'success');
+          
+          // 500ms sonra modal'ı kapat ve dashboard'a yönlendir
           setTimeout(() => {
             this.invitationsSent.emit();
-            this.closeModal.emit();
-          }, 2000);
+            this.onCloseModal();
+          }, 500);
         },
         error: (err) => {
           this.loading = false;
           
-          if (err.status === 400) {
-            this.error = err.error || 'Geçersiz email adresleri.';
+          let errorMessage = 'Davet gönderilirken bir hata oluştu.';
+          
+          if (err.status === 200) {
+            // API başarılı ama response parse edilemedi
+            this.loading = false;
+            this.success = true;
+            
+            const alertMessage = `${emails.length} davetiye başarıyla gönderildi!`;
+            this.showAlert(alertMessage, 'success');
+            
+            // 500ms sonra modal'ı kapat ve dashboard'a yönlendir
+            setTimeout(() => {
+              this.invitationsSent.emit();
+              this.onCloseModal();
+            }, 500);
+            return;
+          } else if (err.status === 400) {
+            errorMessage = err.error || 'Geçersiz email adresleri.';
           } else if (err.status === 0) {
-            this.error = 'API sunucusuna bağlanılamıyor.';
-          } else {
-            this.error = 'Davet gönderilirken bir hata oluştu.';
+            errorMessage = 'API sunucusuna bağlanılamıyor.';
+          } else if (err.status === 401) {
+            errorMessage = 'Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.';
+          } else if (err.status === 500) {
+            errorMessage = 'Sunucu hatası. Lütfen daha sonra tekrar deneyin.';
           }
+          
+          this.error = errorMessage;
+          this.showAlert(errorMessage, 'error');
         }
       });
-    } else {
-      this.markFormGroupTouched();
     }
   }
 
-  private markFormGroupTouched(): void {
-    this.emailsArray.controls.forEach(control => {
-      control.markAsTouched();
-    });
+  showAlert(message: string, type: 'success' | 'error'): void {
+    // Basit alert oluştur
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `simple-alert alert-${type}`;
+    alertDiv.innerHTML = `
+      <div class="alert-content">
+        <span class="alert-icon">${type === 'success' ? '✅' : '❌'}</span>
+        <span class="alert-message">${message}</span>
+        <button class="alert-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+      </div>
+    `;
+    
+    // Stil ekle
+    alertDiv.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 99999;
+      background: ${type === 'success' ? 'linear-gradient(135deg, #28a745 0%, #20c997 100%)' : 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)'};
+      color: white;
+      padding: 16px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      font-weight: 500;
+      font-size: 14px;
+      min-width: 300px;
+      animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // CSS animasyonu ekle
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      .simple-alert .alert-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .simple-alert .alert-icon {
+        font-size: 18px;
+      }
+      .simple-alert .alert-message {
+        flex: 1;
+      }
+      .simple-alert .alert-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .simple-alert .alert-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(alertDiv);
+    
+    // 4 saniye sonra otomatik kaldır
+    setTimeout(() => {
+      if (alertDiv.parentElement) {
+        alertDiv.remove();
+      }
+    }, 4000);
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 
   hasInvalidEmails(): boolean {
-    return this.emailsArray.controls.some(control => control.invalid && control.touched);
+    return this.emailList.some(email => email.trim() && !this.isValidEmail(email.trim()));
+  }
+
+  getValidEmailCount(): number {
+    return this.emailList.filter(email => email.trim() && this.isValidEmail(email.trim())).length;
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 } 

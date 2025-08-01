@@ -28,25 +28,27 @@
         </div>
       </div>
 
-      <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
+      <div class="invite-form">
         <div class="form-group">
           <label>📧 Email Adresleri</label>
           <div class="emails-container">
             <div 
               class="email-input-group" 
-              *ngFor="let emailControl of emailsArray.controls; let i = index"
+              *ngFor="let email of emailList; let i = index; trackBy: trackByIndex"
             >
               <input 
                 type="email" 
-                [formControlName]="i"
+                [value]="email"
+                (input)="updateEmail(i, $any($event.target).value)"
                 placeholder="ornek@mail.com"
                 class="email-input"
+                [class.invalid]="email.trim() && !isValidEmail(email.trim())"
               />
               <button 
                 type="button" 
                 class="remove-email-btn"
                 (click)="removeEmailField(i)"
-                *ngIf="emailsArray.length > 1"
+                *ngIf="emailList.length > 1"
               >
                 ✕
               </button>
@@ -61,8 +63,13 @@
             </button>
           </div>
           
+          <div class="email-stats" *ngIf="emailList.length > 0">
+            <span class="valid-count">✅ {{ getValidEmailCount() }} geçerli email</span>
+            <span class="total-count">📧 {{ emailList.length }} toplam alan</span>
+          </div>
+          
           <div class="error-message" *ngIf="hasInvalidEmails()">
-            <span>Geçerli email adresleri giriniz</span>
+            <span>Geçersiz email adresleri var. Lütfen kontrol edin.</span>
           </div>
         </div>
 
@@ -80,15 +87,16 @@
 
         <div class="invite-actions">
           <button 
-            type="submit" 
+            type="button" 
             class="send-invite-button"
-            [disabled]="inviteForm.invalid || loading"
+            (click)="onSubmit()"
+            [disabled]="getValidEmailCount() === 0 || loading"
           >
-            <span *ngIf="!loading">📤 Davet Gönder</span>
+            <span *ngIf="!loading">📤 Davet Gönder ({{ getValidEmailCount() }})</span>
             <span *ngIf="loading">⏳ Gönderiliyor...</span>
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
