@@ -1,147 +1,182 @@
-<div class="register-container">
-  <div class="register-background">
-    <div class="background-pattern"></div>
-  </div>
+<div class="register-background">
+  <div class="background-pattern"></div>
   
-  <div class="register-card">
-    <div class="logo-section">
-      <div class="logo">
-        <span class="logo-icon">📅</span>
-        <h1 class="logo-text">Meetings App</h1>
-      </div>
-      <p class="tagline">Toplantılarınızı kolayca yönetin</p>
-    </div>
-    
-    <h2>Kayıt Ol</h2>
-    
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="firstName">Ad</label>
-        <div class="input-wrapper">
-          <span class="input-icon">👤</span>
-          <input 
-            type="text" 
-            id="firstName" 
-            formControlName="firstName" 
-            placeholder="Adınızı girin"
-            [class.error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
-          >
+  <div class="register-container">
+    <div class="register-card">
+      <div class="logo-section">
+        <div class="logo">
+          <div class="logo-icon">📅</div>
+          <div class="logo-text">Meetings App</div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
-          <span *ngIf="registerForm.get('firstName')?.errors?.['required']">Ad gereklidir</span>
-          <span *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Ad en az 2 karakter olmalıdır</span>
-        </div>
+        <p class="tagline">Hesabınızı oluşturun ve toplantılarınızı yönetin</p>
       </div>
 
-      <div class="form-group">
-        <label for="lastName">Soyad</label>
-        <div class="input-wrapper">
-          <span class="input-icon">👤</span>
-          <input 
-            type="text" 
-            id="lastName" 
-            formControlName="lastName" 
-            placeholder="Soyadınızı girin"
-            [class.error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
-          >
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <div class="form-group">
+          <label for="firstName">Ad *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input 
+              type="text" 
+              id="firstName" 
+              formControlName="firstName" 
+              placeholder="Adınızı giriniz"
+              [class.error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+            <span *ngIf="registerForm.get('firstName')?.errors?.['required']">Ad gereklidir</span>
+            <span *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Ad en az 2 karakter olmalıdır</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
-          <span *ngIf="registerForm.get('lastName')?.errors?.['required']">Soyad gereklidir</span>
-          <span *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Soyad en az 2 karakter olmalıdır</span>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <div class="input-wrapper">
-          <span class="input-icon">📧</span>
-          <input 
-            type="email" 
-            id="email" 
-            formControlName="email" 
-            placeholder="Email adresinizi girin"
-            [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-          >
+        <div class="form-group">
+          <label for="lastName">Soyad *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input 
+              type="text" 
+              id="lastName" 
+              formControlName="lastName" 
+              placeholder="Soyadınızı giriniz"
+              [class.error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+            <span *ngIf="registerForm.get('lastName')?.errors?.['required']">Soyad gereklidir</span>
+            <span *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Soyad en az 2 karakter olmalıdır</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-          <span *ngIf="registerForm.get('email')?.errors?.['required']">Email gereklidir</span>
-          <span *ngIf="registerForm.get('email')?.errors?.['email']">Geçerli bir email adresi girin</span>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label for="phone">Telefon</label>
-        <div class="input-wrapper">
-          <span class="input-icon">📱</span>
-          <input 
-            type="tel" 
-            id="phone" 
-            formControlName="phone" 
-            placeholder="Telefon numaranızı girin"
-            [class.error]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
-          >
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email" 
+              placeholder="Email adresinizi giriniz"
+              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">Email gereklidir</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">Geçerli bir email adresi giriniz</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-          <span *ngIf="registerForm.get('phone')?.errors?.['required']">Telefon gereklidir</span>
-          <span *ngIf="registerForm.get('phone')?.errors?.['pattern']">Geçerli bir telefon numarası girin</span>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label for="password">Şifre</label>
-        <div class="input-wrapper">
-          <span class="input-icon">🔒</span>
-          <input 
-            type="password" 
-            id="password" 
-            formControlName="password" 
-            placeholder="Şifrenizi girin"
-            [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
-          >
+        <div class="form-group">
+          <label for="phone">Telefon *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📱</span>
+            <input 
+              type="tel" 
+              id="phone" 
+              formControlName="phone" 
+              placeholder="Telefon numaranızı giriniz"
+              [class.error]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+            <span *ngIf="registerForm.get('phone')?.errors?.['required']">Telefon gereklidir</span>
+            <span *ngIf="registerForm.get('phone')?.errors?.['pattern']">Geçerli bir telefon numarası giriniz</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-          <span *ngIf="registerForm.get('password')?.errors?.['required']">Şifre gereklidir</span>
-          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label for="confirmPassword">Şifre Tekrar</label>
-        <div class="input-wrapper">
-          <span class="input-icon">🔒</span>
-          <input 
-            type="password" 
-            id="confirmPassword" 
-            formControlName="confirmPassword" 
-            placeholder="Şifrenizi tekrar girin"
-            [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
-          >
+        <div class="form-group">
+          <label for="password">Şifre *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password" 
+              placeholder="Şifrenizi giriniz"
+              [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <span *ngIf="registerForm.get('password')?.errors?.['required']">Şifre gereklidir</span>
+            <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
-          <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Şifre tekrarı gereklidir</span>
+
+        <div class="form-group">
+          <label for="confirmPassword">Şifre Tekrar *</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              formControlName="confirmPassword" 
+              placeholder="Şifrenizi tekrar giriniz"
+              [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+            <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Şifre tekrarı gereklidir</span>
+            <span *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">Şifreler eşleşmiyor</span>
+          </div>
         </div>
-        <div class="error-message" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
-          Şifreler eşleşmiyor
+
+        <!-- Fotoğraf Yükleme Alanı -->
+        <div class="form-group">
+          <label for="photo">Profil Fotoğrafı (Opsiyonel)</label>
+          <div class="photo-upload-area">
+            <div class="photo-input-wrapper" *ngIf="!photoPreview">
+              <input 
+                type="file" 
+                id="photo" 
+                (change)="onPhotoSelected($event)"
+                accept="image/*"
+                [disabled]="isLoading"
+              />
+              <div class="photo-upload-placeholder">
+                <span class="photo-icon">📷</span>
+                <p>Fotoğraf seçmek için tıklayın</p>
+                <small>JPG, PNG, GIF (Max: 5MB)</small>
+              </div>
+            </div>
+            
+            <div class="photo-preview" *ngIf="photoPreview">
+              <img [src]="photoPreview" alt="Profil fotoğrafı önizlemesi" />
+              <button type="button" class="remove-photo-btn" (click)="removePhoto()" [disabled]="isLoading">
+                ❌ Kaldır
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Error Message -->
-      <div class="error-alert" *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
-      </div>
+        <!-- Upload Progress -->
+        <div class="upload-progress" *ngIf="isLoading && selectedPhoto">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+          </div>
+          <span class="progress-text">{{ uploadProgress }}% yüklendi</span>
+        </div>
 
-      <button 
-        type="submit" 
-        [disabled]="registerForm.invalid || isLoading"
-        class="submit-btn"
-      >
-        <span *ngIf="!isLoading">Kayıt Ol</span>
-        <span *ngIf="isLoading">Kayıt olunuyor...</span>
-      </button>
-    </form>
+        <!-- Error Message -->
+        <div class="error-alert" *ngIf="errorMessage">
+          <p>{{ errorMessage }}</p>
+        </div>
 
-    <div class="login-link">
-      <p>Zaten hesabınız var mı? <a (click)="goToLogin()">Giriş yapın</a></p>
+        <button 
+          type="submit" 
+          class="register-button" 
+          [disabled]="registerForm.invalid || isLoading"
+        >
+          <span *ngIf="!isLoading">Kayıt Ol</span>
+          <span *ngIf="isLoading">
+            <span *ngIf="selectedPhoto && uploadProgress < 100">Fotoğraf Yükleniyor...</span>
+            <span *ngIf="!selectedPhoto || uploadProgress >= 100">Kayıt Oluşturuluyor...</span>
+          </span>
+        </button>
+
+        <div class="login-link">
+          Zaten hesabınız var mı? <a (click)="goToLogin()">Giriş Yapın</a>
+        </div>
+      </form>
     </div>
   </div>
 </div>

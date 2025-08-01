@@ -1,21 +1,12 @@
-.register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.register-background {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   position: relative;
   overflow: hidden;
-}
-
-.register-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
 }
 
 .background-pattern {
@@ -27,12 +18,18 @@
   background-image: 
     radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
     radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, transparent 50%);
-  animation: float 6s ease-in-out infinite;
+  animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+.register-container {
+  width: 100%;
+  max-width: 500px;
+  z-index: 1;
 }
 
 .register-card {
@@ -41,10 +38,6 @@
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   padding: 40px;
-  width: 100%;
-  max-width: 500px;
-  position: relative;
-  z-index: 2;
   animation: slideUp 0.6s ease-out;
 }
 
@@ -68,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
@@ -86,10 +79,7 @@
 .logo-text {
   font-size: 28px;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #333;
   margin: 0;
 }
 
@@ -97,76 +87,196 @@
   color: #666;
   font-size: 16px;
   margin: 0;
-  font-weight: 400;
 }
 
-h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-  font-size: 24px;
-  font-weight: 600;
+.register-form {
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 18px;
+    color: #999;
+    z-index: 1;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background: white;
+
+    &:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    &.error {
+      border-color: #e74c3c;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #555;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-icon {
-  position: absolute;
-  left: 12px;
-  font-size: 16px;
-  color: #999;
-  z-index: 1;
-}
-
-input {
-  width: 100%;
-  padding: 12px 16px 12px 40px;
-  border: 2px solid #e1e5e9;
+/* Fotoğraf Yükleme Alanı */
+.photo-upload-area {
+  border: 2px dashed #e1e5e9;
   border-radius: 12px;
-  font-size: 16px;
+  padding: 20px;
+  text-align: center;
   transition: all 0.3s ease;
-  box-sizing: border-box;
-  background: white;
+  background: #f8f9fa;
 
-  &:focus {
-    outline: none;
+  &:hover {
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: #f0f2ff;
   }
+}
 
-  &.error {
-    border-color: #e74c3c;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+.photo-input-wrapper {
+  position: relative;
+  cursor: pointer;
+
+  input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
   }
+}
 
-  &::placeholder {
+.photo-upload-placeholder {
+  .photo-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
     color: #999;
   }
+
+  p {
+    margin: 0 0 5px 0;
+    color: #666;
+    font-weight: 500;
+  }
+
+  small {
+    color: #999;
+    font-size: 12px;
+  }
 }
 
-.error-message {
-  color: #e74c3c;
+.photo-preview {
+  position: relative;
+  display: inline-block;
+
+  img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .remove-photo-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+
+    &:hover:not(:disabled) {
+      background: #c0392b;
+      transform: scale(1.1);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* Upload Progress */
+.upload-progress {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e1e5e9;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e1e5e9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
   font-size: 12px;
-  margin-top: 5px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  color: #666;
+  font-weight: 500;
 }
 
 .error-alert {
@@ -184,7 +294,7 @@ input {
   }
 }
 
-.submit-btn {
+.register-button {
   width: 100%;
   padding: 14px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -228,20 +338,16 @@ input {
 .login-link {
   text-align: center;
   margin-top: 20px;
-  
-  p {
-    color: #666;
-    margin: 0;
-    font-size: 14px;
-  }
-  
+  color: #666;
+  font-size: 14px;
+
   a {
     color: #667eea;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
     transition: color 0.3s ease;
-    
+
     &:hover {
       color: #764ba2;
       text-decoration: underline;
@@ -249,17 +355,18 @@ input {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .register-card {
     padding: 30px 20px;
     margin: 10px;
   }
-  
+
   .logo-text {
     font-size: 24px;
   }
-  
-  h2 {
-    font-size: 20px;
+
+  .photo-preview img {
+    max-width: 120px;
+    max-height: 120px;
   }
 }

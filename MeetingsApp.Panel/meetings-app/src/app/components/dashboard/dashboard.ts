@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { MeetingService } from '../../services/meeting';
 import { AuthService } from '../../services/auth';
 import { Meeting } from '../../models/meeting.model';
+import { MeetingDetailModalComponent } from '../meeting-detail-modal/meeting-detail-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MeetingDetailModalComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -16,15 +17,33 @@ export class DashboardComponent implements OnInit {
   meetings: Meeting[] = [];
   loading = false;
   error = '';
+  selectedMeeting: Meeting | null = null;
+  isModalVisible = false;
 
   constructor(
-    private meetingService: MeetingService,
-    public authService: AuthService,
+    public meetingService: MeetingService, // Made public for template access
+    public authService: AuthService, // Made public for template access
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    // Token kontrolü
+    const token = this.authService.getToken();
+    if (!token || token === 'temp-token') {
+      console.log('Token bulunamadı veya geçici token. Login sayfasına yönlendiriliyor.');
+      this.router.navigate(['/login']);
+      return;
+    }
+    
+    console.log('Token mevcut, toplantılar yükleniyor...');
     this.loadMeetings();
+  }
+
+  // Image error handler
+  onImageError(event: any): void {
+    console.log('Image load error, using default avatar');
+    event.target.style.display = 'none';
+    event.target.nextElementSibling.style.display = 'flex';
   }
 
   loadMeetings(): void {
@@ -51,6 +70,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // Modal işlemleri
+  openMeetingModal(meeting: Meeting): void {
+    this.selectedMeeting = meeting;
+    this.isModalVisible = true;
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
+    this.selectedMeeting = null;
+  }
+
+  onMeetingCancelled(meetingId: number): void {
+    // İptal edilen toplantıyı listede güncelle (kaldırmak yerine)
+    const meetingIndex = this.meetings.findIndex(m => m.id === meetingId);
+    if (meetingIndex !== -1) {
+      this.meetings[meetingIndex].isCanceled = true;
+    }
+  }
+
   createMeeting(): void {
     this.router.navigate(['/meeting-form']);
   }
@@ -71,20 +109,6 @@ export class DashboardComponent implements OnInit {
           }
         });
       }
-    }
-  }
-
-  cancelMeeting(meeting: Meeting): void {
-    if (confirm('Bu toplantıyı iptal etmek istediğinizden emin misiniz?')) {
-      this.meetingService.cancelMeeting(meeting.id!).subscribe({
-        next: () => {
-          alert('Toplantı iptal edildi.');
-          this.loadMeetings();
-        },
-        error: (error) => {
-          alert('Toplantı iptal edilirken hata oluştu.');
-        }
-      });
     }
   }
 

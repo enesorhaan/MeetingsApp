@@ -27,4 +27,6 @@ export interface AuthResponse {
   fullName: string;
   email: string;
   token: string;
+  photoPath?: string;
+  userId?: number; // API'den dönen kullanıcı ID'si
 } 

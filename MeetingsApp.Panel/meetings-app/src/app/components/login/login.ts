@@ -32,9 +32,12 @@ export class LoginComponent {
       this.isLoading = true;
       this.errorMessage = '';
 
+      console.log('Login form submitted:', this.loginForm.value);
+
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
+          this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
@@ -44,7 +47,7 @@ export class LoginComponent {
           if (error.status === 0) {
             this.errorMessage = 'API sunucusuna bağlanılamıyor. Lütfen API sunucusunun çalıştığından emin olun.';
           } else if (error.status === 401) {
-            this.errorMessage = 'Email veya şifre hatalı.';
+            this.errorMessage = error.error || 'Email veya şifre hatalı.';
           } else if (error.status === 400) {
             this.errorMessage = 'Geçersiz istek. Lütfen bilgilerinizi kontrol edin.';
           } else {

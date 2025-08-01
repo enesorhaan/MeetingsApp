@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { 
-  Meeting, 
-  CreateMeetingRequest, 
-  UpdateMeetingRequest, 
+import {
+  Meeting,
+  CreateMeetingRequest,
+  UpdateMeetingRequest,
   MeetingInviteRequest,
-  JoinMeetingResponse 
+  JoinMeetingResponse,
+  MeetingInvitationDto
 } from '../models/meeting.model';
 import { AuthService } from './auth';
 
@@ -22,7 +23,7 @@ export class MeetingService {
   ) {}
 
   getMeetings(): Observable<Meeting[]> {
-    return this.http.get<Meeting[]>(`${this.apiUrl}/meeting`, {
+    return this.http.get<Meeting[]>(`${this.apiUrl}/meeting/my-meetings`, {
       headers: this.authService.getAuthHeaders()
     });
   }
@@ -51,14 +52,20 @@ export class MeetingService {
     });
   }
 
-  cancelMeeting(id: number): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/meeting/${id}/cancel`, {}, {
+  cancelMeeting(meetingId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/meeting/${meetingId}`, {
       headers: this.authService.getAuthHeaders()
     });
   }
 
-  inviteToMeeting(inviteRequest: MeetingInviteRequest): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/meeting/invite`, inviteRequest, {
+  inviteToMeeting(inviteRequest: MeetingInviteRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/meeting/invite`, inviteRequest, {
+      headers: this.authService.getAuthHeaders()
+    });
+  }
+
+  sendInvitations(invitationDto: MeetingInvitationDto): Observable<any> {
+    return this.http.post(`${this.apiUrl}/meeting/invite`, invitationDto, {
       headers: this.authService.getAuthHeaders()
     });
   }
@@ -71,10 +78,12 @@ export class MeetingService {
     const formData = new FormData();
     formData.append('File', file); // .NET API'deki FileUploadRequest.File ile eşleşiyor
     
-    // FormData kullanırken sadece Authorization header'ını gönderiyoruz
-    // Browser otomatik olarak multipart/form-data Content-Type header'ını ekler
-    return this.http.post<{ path: string }>(`${this.apiUrl}/filestorage/document-upload`, formData, {
-      headers: this.authService.getAuthHeadersOnly()
-    });
+    // Upload işlemlerinde token gerekmez
+    return this.http.post<{ path: string }>(`${this.apiUrl}/filestorage/document-upload`, formData);
+  }
+
+  // Dosya getirme metodu
+  getFile(path: string): string {
+    return `${this.apiUrl}/filestorage/get-file?path=${encodeURIComponent(path)}`;
   }
 }

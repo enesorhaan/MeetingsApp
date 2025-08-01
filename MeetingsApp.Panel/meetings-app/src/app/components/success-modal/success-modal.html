@@ -1,0 +1,62 @@
+<div class="success-modal-overlay" *ngIf="isVisible">
+  <div class="success-modal">
+    <div class="success-modal-header">
+      <h2>🎉 Toplantı Başarıyla Oluşturuldu!</h2>
+      <button class="close-button" (click)="onCloseModal()">
+        ✕
+      </button>
+    </div>
+    
+    <div class="success-modal-body">
+      <div class="success-icon">✅</div>
+      
+      <div class="meeting-info">
+        <h3>{{ meeting?.title }}</h3>
+        <p>{{ meeting?.description }}</p>
+        
+        <div class="meeting-details">
+          <div class="detail-item">
+            <span class="label">📅 Başlangıç:</span>
+            <span>{{ meeting?.startTime | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">⏰ Süre:</span>
+            <span>{{ meeting?.durationInMinutes }} dakika</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="meeting-link-section">
+        <h4>🔗 Toplantı Linki</h4>
+        <div class="link-container">
+          <input 
+            type="text" 
+            [value]="meeting?.publicLink" 
+            readonly 
+            class="link-input"
+          />
+          <button class="copy-button" (click)="copyMeetingLink()">
+            📋 Kopyala
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-modal-actions">
+      <button class="invite-button" (click)="onInviteClicked()">
+        📧 Davet Et
+      </button>
+      <button class="close-action-button" (click)="onCloseModal()">
+        Tamam
+      </button>
+    </div>
+  </div>
+
+  <!-- Copy Toast Notification -->
+  <div class="copy-toast" *ngIf="showCopyToast">
+    <div class="toast-content">
+      <span class="toast-icon">📋</span>
+      <span class="toast-message">Toplantı linki kopyalandı!</span>
+    </div>
+  </div>
+</div> 

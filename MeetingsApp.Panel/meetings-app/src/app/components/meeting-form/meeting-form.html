@@ -47,6 +47,7 @@
           />
           <div class="error-message" *ngIf="meetingForm.get('startTime')?.invalid && meetingForm.get('startTime')?.touched">
             <span *ngIf="meetingForm.get('startTime')?.errors?.['required']">Başlangıç zamanı gereklidir</span>
+            <span *ngIf="meetingForm.get('startTime')?.errors?.['pastDate']">Toplantı zamanı gelecekte olmalıdır (en az 5 dakika sonra)</span>
           </div>
         </div>
 
@@ -122,4 +123,20 @@
       </div>
     </form>
   </div>
+
+  <!-- Success Modal -->
+  <app-success-modal
+    [meeting]="createdMeeting"
+    [isVisible]="showSuccessModal"
+    (closeModal)="onSuccessModalClose()"
+    (inviteClicked)="onInviteClicked($event)"
+  ></app-success-modal>
+
+  <!-- Invite Modal -->
+  <app-invite-modal
+    [meeting]="createdMeeting"
+    [isVisible]="showInviteModal"
+    (closeModal)="onInviteModalClose()"
+    (invitationsSent)="onInvitationsSent()"
+  ></app-invite-modal>
 </div>

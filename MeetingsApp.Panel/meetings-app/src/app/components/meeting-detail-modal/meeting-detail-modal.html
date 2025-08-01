@@ -1,0 +1,222 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onCloseModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Toplantı Detayları</h2>
+      <button class="close-button" (click)="onCloseModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Loading -->
+      <div class="loading-spinner" *ngIf="loading">
+        <p>Toplantı detayları yükleniyor...</p>
+      </div>
+
+      <!-- Error -->
+      <div class="error-message" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+
+      <!-- Meeting Details -->
+      <div class="meeting-details" *ngIf="meeting && !loading">
+        <div class="meeting-info">
+          <h3>{{ meeting.title }}</h3>
+          <p class="description">{{ meeting.description }}</p>
+          
+          <div class="meeting-meta">
+            <div class="meta-item">
+              <span class="label">📅 Başlangıç:</span>
+              <span>{{ meeting.startTime | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">⏰ Bitiş:</span>
+              <span>{{ meeting.endTime | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">⏱️ Süre:</span>
+              <span>{{ meeting.durationInMinutes }} dakika</span>
+            </div>
+          </div>
+
+          <!-- File Section -->
+          <div class="file-section" *ngIf="meeting.filePath">
+            <h4>📎 Toplantı Dosyası</h4>
+            <div class="file-info">
+              <span class="file-name">{{ meeting.filePath.split('/').pop() }}</span>
+              <button class="download-button" (click)="onDownloadFile()">
+                📥 İndir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Join Meeting Section -->
+        <div class="join-section">
+          <h4>🎯 Toplantıya Katıl</h4>
+          
+          <!-- Authenticated User -->
+          <div *ngIf="isAuthenticated()" class="authenticated-user">
+            <p class="user-info">
+              <strong>{{ getCurrentUser()?.firstName }} {{ getCurrentUser()?.lastName }}</strong> 
+              olarak katılacaksınız.
+            </p>
+            <button 
+              class="join-button primary" 
+              (click)="onJoinMeeting()"
+              [disabled]="joinLoading"
+            >
+              <span *ngIf="!joinLoading">🚀 Toplantıya Katıl</span>
+              <span *ngIf="joinLoading">Katılıyor...</span>
+            </button>
+          </div>
+
+          <!-- Guest User -->
+          <div *ngIf="!isAuthenticated()" class="guest-user">
+            <p class="guest-info">
+              Misafir olarak katılmak için bilgilerinizi girin veya 
+              <a href="#" (click)="onLoginRedirect(); $event.preventDefault()">giriş yapın</a>.
+            </p>
+            
+            <form [formGroup]="joinForm" (ngSubmit)="onJoinMeeting()" class="join-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">Ad *</label>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    formControlName="firstName"
+                    placeholder="Adınız"
+                  />
+                  <div class="error-message" *ngIf="joinForm.get('firstName')?.invalid && joinForm.get('firstName')?.touched">
+                    <span *ngIf="joinForm.get('firstName')?.errors?.['required']">Ad gereklidir</span>
+                    <span *ngIf="joinForm.get('firstName')?.errors?.['minlength']">Ad en az 2 karakter olmalıdır</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastName">Soyad *</label>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    formControlName="lastName"
+                    placeholder="Soyadınız"
+                  />
+                  <div class="error-message" *ngIf="joinForm.get('lastName')?.invalid && joinForm.get('lastName')?.touched">
+                    <span *ngIf="joinForm.get('lastName')?.errors?.['required']">Soyad gereklidir</span>
+                    <span *ngIf="joinForm.get('lastName')?.errors?.['minlength']">Soyad en az 2 karakter olmalıdır</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email"
+                  placeholder="Email adresiniz"
+                />
+                <div class="error-message" *ngIf="joinForm.get('email')?.invalid && joinForm.get('email')?.touched">
+                  <span *ngIf="joinForm.get('email')?.errors?.['required']">Email gereklidir</span>
+                  <span *ngIf="joinForm.get('email')?.errors?.['email']">Geçerli bir email adresi giriniz</span>
+                </div>
+              </div>
+
+              <div class="join-actions">
+                <button 
+                  type="submit" 
+                  class="join-button primary"
+                  [disabled]="joinForm.invalid || joinLoading"
+                >
+                  <span *ngIf="!joinLoading">👤 Misafir Olarak Katıl</span>
+                  <span *ngIf="joinLoading">Katılıyor...</span>
+                </button>
+                
+                <button 
+                  type="button" 
+                  class="join-button secondary"
+                  (click)="onLoginRedirect()"
+                >
+                  🔐 Giriş Yap
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Join Error -->
+          <div class="error-message" *ngIf="joinError">
+            <p>{{ joinError }}</p>
+          </div>
+        </div>
+
+        <!-- Cancel Meeting (Only for organizer and future meetings) -->
+        <div class="cancel-section" *ngIf="isAuthenticated() && isOrganizer() && !meeting.isCanceled && isFutureMeeting()">
+          <hr>
+          <h4>⚠️ Toplantı Yönetimi</h4>
+          
+          <!-- Success Message -->
+          <div class="success-message" *ngIf="cancelSuccess">
+            <div class="success-icon">✅</div>
+            <p>Toplantı başarıyla iptal edildi!</p>
+          </div>
+
+          <!-- Error Message -->
+          <div class="error-message" *ngIf="error">
+            <div class="error-icon">❌</div>
+            <p>{{ error }}</p>
+          </div>
+
+          <!-- Cancel Button -->
+          <div *ngIf="!cancelSuccess">
+            <p class="warning-text">
+              Bu toplantıyı iptal etmek istediğinizden emin misiniz? 
+              Bu işlem geri alınamaz.
+            </p>
+            <button 
+              class="cancel-button" 
+              (click)="showCancelConfirmationDialog()"
+              [disabled]="cancelLoading"
+            >
+              🗑️ Toplantıyı İptal Et
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirmation Dialog -->
+        <div class="confirmation-overlay" *ngIf="showCancelConfirmation">
+          <div class="confirmation-dialog">
+            <div class="confirmation-header">
+              <h3>⚠️ Onay Gerekli</h3>
+            </div>
+            <div class="confirmation-body">
+              <p><strong>{{ meeting?.title }}</strong> toplantısını iptal etmek istediğinizden emin misiniz?</p>
+              <p class="warning-text">Bu işlem geri alınamaz.</p>
+            </div>
+            <div class="confirmation-actions">
+              <button 
+                class="confirmation-button secondary"
+                (click)="hideCancelConfirmationDialog()"
+              >
+                ❌ İptal Et
+              </button>
+              <button 
+                class="confirmation-button danger"
+                (click)="confirmCancelMeeting()"
+              >
+                ✅ Evet, İptal Et
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Already Cancelled Notice -->
+        <div class="already-cancelled" *ngIf="meeting.isCanceled">
+          <hr>
+          <div class="cancelled-notice">
+            <h4>❌ Toplantı İptal Edilmiş</h4>
+            <p>Bu toplantı daha önce iptal edilmiştir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

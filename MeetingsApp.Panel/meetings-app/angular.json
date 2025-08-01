@@ -64,7 +64,14 @@
               "buildTarget": "meetings-app:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4200,
+            "host": "localhost",
+            "liveReload": true,
+            "watch": true,
+            "hmr": false
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

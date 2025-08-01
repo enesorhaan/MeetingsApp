@@ -1,16 +1,15 @@
 export interface Meeting {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   startTime: string;
   endTime: string;
-  durationInMinutes?: number;
+  durationInMinutes: number;
+  createdByUserId: number;
+  createdAt: string;
   filePath?: string;
-  isCanceled?: boolean;
-  publicLinkGuid?: string;
-  createdByUserId?: number;
-  createdAt?: string;
   publicLink?: string;
+  isCanceled?: boolean; // API'den dönen isCanceled ile eşleşiyor
 }
 
 export interface MeetingParticipant {
@@ -50,8 +49,10 @@ export interface JoinMeetingResponse {
   startTime: string;
   endTime: string;
   durationInMinutes: number;
-  filePath?: string;
-  isCanceled: boolean;
-  publicLinkGuid: string;
   publicLink: string;
+}
+
+export interface MeetingInvitationDto {
+  meetingId: number;
+  emailList: string[];
 } 

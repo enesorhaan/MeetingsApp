@@ -3,7 +3,25 @@
     <div class="header-content">
       <h1>Toplantı Yönetimi</h1>
       <div class="user-info">
-        <span>Hoş geldiniz, {{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
+        <div class="user-profile">
+          <div class="user-avatar">
+            <img 
+              *ngIf="authService.getCurrentUser()?.profileImagePath; else defaultAvatar"
+              [src]="meetingService.getFile(authService.getCurrentUser()?.profileImagePath!)" 
+              alt="Profil fotoğrafı"
+              (error)="onImageError($event)"
+            />
+            <ng-template #defaultAvatar>
+              <div class="default-avatar">
+                <span class="avatar-icon">👤</span>
+              </div>
+            </ng-template>
+          </div>
+          <div class="user-details">
+            <span class="user-name">Hoş geldiniz, {{ authService.getCurrentUser()?.firstName }} {{ authService.getCurrentUser()?.lastName }}</span>
+            <span class="user-email">{{ authService.getCurrentUser()?.email }}</span>
+          </div>
+        </div>
         <button class="logout-button" (click)="logout()">Çıkış Yap</button>
       </div>
     </div>
@@ -31,8 +49,13 @@
         <p>Toplantılar yükleniyor...</p>
       </div>
 
-      <div class="meetings-grid" *ngIf="!loading && meetings.length > 0">
-        <div class="meeting-card" *ngFor="let meeting of meetings">
+      <div class="meetings-grid">
+        <div 
+          class="meeting-card" 
+          *ngFor="let meeting of meetings"
+          [class.cancelled]="meeting.isCanceled"
+          (click)="openMeetingModal(meeting)"
+        >
           <div class="meeting-header">
             <h3>{{ meeting.title }}</h3>
             <span class="meeting-status" [class]="getMeetingStatusClass(meeting)">
@@ -40,54 +63,53 @@
             </span>
           </div>
           
-          <div class="meeting-details">
-            <p class="meeting-description">{{ meeting.description }}</p>
-            
-            <div class="meeting-info">
-              <div class="info-item">
-                <strong>Başlangıç:</strong> {{ formatDateTime(meeting.startTime) }}
-              </div>
-              <div class="info-item">
-                <strong>Bitiş:</strong> {{ formatDateTime(meeting.endTime) }}
-              </div>
-              <div class="info-item" *ngIf="meeting.durationInMinutes">
-                <strong>Süre:</strong> {{ meeting.durationInMinutes }} dakika
-              </div>
-              <div class="info-item" *ngIf="meeting.filePath">
-                <strong>Dosya:</strong> {{ meeting.filePath }}
-              </div>
-              <div class="info-item" *ngIf="meeting.publicLink">
-                <strong>Link:</strong> 
-                <a [href]="meeting.publicLink" target="_blank" class="meeting-link">
-                  Toplantı Linki
-                </a>
-              </div>
+          <p class="meeting-description">{{ meeting.description }}</p>
+          
+          <div class="meeting-meta">
+            <div class="meta-item">
+              <span class="label">📅 Başlangıç:</span>
+              <span>{{ formatDateTime(meeting.startTime) }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">⏰ Bitiş:</span>
+              <span>{{ formatDateTime(meeting.endTime) }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">⏱️ Süre:</span>
+              <span>{{ meeting.durationInMinutes }} dakika</span>
             </div>
           </div>
 
-          <div class="meeting-actions">
+          <!-- İptal Edilmiş Toplantı Mesajı -->
+          <div class="cancelled-notice" *ngIf="meeting.isCanceled">
+            <p>❌ Bu toplantı iptal edilmiştir</p>
+          </div>
+
+          <div class="meeting-actions" *ngIf="!meeting.isCanceled">
             <button 
-              class="invite-button" 
-              *ngIf="isOrganizer(meeting)"
-              (click)="inviteToMeeting(meeting)"
+              class="action-button primary"
+              (click)="openMeetingModal(meeting); $event.stopPropagation()"
             >
-              Davet Gönder
+              👁️ Detaylar
             </button>
             
             <button 
-              class="cancel-button" 
-              *ngIf="isOrganizer(meeting)"
-              (click)="cancelMeeting(meeting)"
+              class="action-button secondary"
+              (click)="joinMeetingByLink(); $event.stopPropagation()"
             >
-              Toplantıyı İptal Et
+              🚀 Katıl
             </button>
-            
-            <span class="organizer-badge" *ngIf="isOrganizer(meeting)">
-              Organizatör
-            </span>
           </div>
         </div>
       </div>
+
+      <!-- Meeting Detail Modal -->
+      <app-meeting-detail-modal
+        [meeting]="selectedMeeting"
+        [isVisible]="isModalVisible"
+        (closeModal)="closeModal()"
+        (meetingCancelled)="onMeetingCancelled($event)"
+      ></app-meeting-detail-modal>
 
       <div class="no-meetings" *ngIf="!loading && meetings.length === 0">
         <p>Henüz hiç toplantı bulunmuyor.</p>

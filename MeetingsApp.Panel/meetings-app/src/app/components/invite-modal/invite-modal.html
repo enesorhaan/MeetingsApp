@@ -1,0 +1,102 @@
+<div class="invite-modal-overlay" *ngIf="isVisible">
+  <div class="invite-modal">
+    <div class="invite-modal-header">
+      <h2>📧 Toplantıya Davet Et</h2>
+      <button class="close-button" (click)="onCloseModal()">
+        ✕
+      </button>
+    </div>
+    
+    <div class="invite-modal-body">
+      <div class="meeting-info">
+        <h3>{{ meeting?.title }}</h3>
+        <p>{{ meeting?.description }}</p>
+      </div>
+
+      <div class="meeting-link-section">
+        <h4>🔗 Toplantı Linki</h4>
+        <div class="link-container">
+          <input 
+            type="text" 
+            [value]="meeting?.publicLink" 
+            readonly 
+            class="link-input"
+          />
+          <button class="copy-button" (click)="copyMeetingLink()">
+            📋 Kopyala
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
+        <div class="form-group">
+          <label>📧 Email Adresleri</label>
+          <div class="emails-container">
+            <div 
+              class="email-input-group" 
+              *ngFor="let emailControl of emailsArray.controls; let i = index"
+            >
+              <input 
+                type="email" 
+                [formControlName]="i"
+                placeholder="ornek@mail.com"
+                class="email-input"
+              />
+              <button 
+                type="button" 
+                class="remove-email-btn"
+                (click)="removeEmailField(i)"
+                *ngIf="emailsArray.length > 1"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <button 
+              type="button" 
+              class="add-email-btn"
+              (click)="addEmailField()"
+            >
+              ➕ Email Ekle
+            </button>
+          </div>
+          
+          <div class="error-message" *ngIf="hasInvalidEmails()">
+            <span>Geçerli email adresleri giriniz</span>
+          </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" *ngIf="success">
+          <div class="success-icon">✅</div>
+          <p>Davetiyeler başarıyla gönderildi!</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="error">
+          <div class="error-icon">❌</div>
+          <p>{{ error }}</p>
+        </div>
+
+        <div class="invite-actions">
+          <button 
+            type="submit" 
+            class="send-invite-button"
+            [disabled]="inviteForm.invalid || loading"
+          >
+            <span *ngIf="!loading">📤 Davet Gönder</span>
+            <span *ngIf="loading">⏳ Gönderiliyor...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Copy Toast Notification -->
+  <div class="copy-toast" *ngIf="showCopyToast">
+    <div class="toast-content">
+      <span class="toast-icon">📋</span>
+      <span class="toast-message">Toplantı linki kopyalandı!</span>
+    </div>
+  </div>
+</div> 
