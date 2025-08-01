@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -29,7 +29,8 @@ export class MeetingFormComponent {
   constructor(
     private fb: FormBuilder,
     private meetingService: MeetingService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     // Şu anki zamandan 15 dakika sonrasını hesapla
     const now = new Date();
@@ -93,6 +94,7 @@ export class MeetingFormComponent {
         this.meetingService.uploadFile(this.selectedFile).subscribe({
           next: (uploadResponse) => {
             this.uploadProgress = 100;
+            // Loading state'ini sıfırlamıyoruz, createMeetingWithFile içinde sıfırlanacak
             this.createMeetingWithFile(formData, uploadResponse.path);
           },
           error: (err) => {
@@ -133,17 +135,29 @@ export class MeetingFormComponent {
       filePath: filePath
     };
 
+    console.log('createMeetingWithFile çağrıldı:', meetingData);
+
     this.meetingService.createMeeting(meetingData).subscribe({
       next: (response) => {
+        console.log('Toplantı oluşturma başarılı:', response);
+        
+        // Loading state'ini hemen sıfırla
         this.loading = false;
+        this.uploadProgress = 0;
+        this.cdr.detectChanges();
+        console.log('Loading state sıfırlandı:', this.loading);
         
         // Başarı modalını göster
         this.createdMeeting = response;
         this.showSuccessModal = true;
+        console.log('Success modal gösteriliyor:', this.showSuccessModal);
+        console.log('Created meeting:', this.createdMeeting);
         
         // Eğer modal görünmezse loading'i manuel olarak sıfırla
         setTimeout(() => {
+          console.log('3 saniye sonra loading durumu:', this.loading);
           if (this.loading) {
+            console.log('Loading manuel olarak sıfırlanıyor');
             this.loading = false;
           }
         }, 3000);
