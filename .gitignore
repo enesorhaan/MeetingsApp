@@ -246,3 +246,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Uploads and logs directories
+MeetingsApp.Api/MeetingsApp.Api/Uploads/
+MeetingsApp.Api/MeetingsApp.Api/logs

@@ -16,17 +16,14 @@ interface ToastMessage {
   template: `
     <div class="toast-container">
       <div 
-        *ngFor="let toast of toasts; trackBy: trackByFn" 
+        *ngFor="let toast of toasts; trackBy: trackByFn"
         class="toast toast-{{ toast.type }}"
         [@slideInOut]
       >
-        <div class="toast-icon">
-          <span *ngIf="toast.type === 'success'">✅</span>
-          <span *ngIf="toast.type === 'error'">❌</span>
-          <span *ngIf="toast.type === 'warning'">⚠️</span>
-          <span *ngIf="toast.type === 'info'">ℹ️</span>
-        </div>
-        <div class="toast-message">{{ toast.message }}</div>
+        <span class="toast-icon">
+          {{ getIcon(toast.type) }}
+        </span>
+        <span class="toast-message">{{ toast.message }}</span>
         <button class="toast-close" (click)="removeToast(toast.id)">✕</button>
       </div>
     </div>
@@ -48,10 +45,8 @@ interface ToastMessage {
       top: 20px;
       right: 20px;
       z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
       max-width: 400px;
+      pointer-events: none;
     }
 
     .toast {
@@ -59,12 +54,14 @@ interface ToastMessage {
       align-items: center;
       gap: 12px;
       padding: 16px 20px;
+      margin-bottom: 10px;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      color: white;
       font-weight: 500;
       font-size: 14px;
       min-width: 300px;
+      pointer-events: auto;
+      color: white;
     }
 
     .toast-success {
@@ -133,7 +130,11 @@ export class ToastNotificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.eventListener = (event: any) => {
       if (event.detail && event.detail.message && event.detail.type) {
-        this.addToast(event.detail.message, event.detail.type);
+        this.showToast({
+          type: event.detail.type,
+          message: event.detail.message,
+          duration: 4000
+        });
       }
     };
     
@@ -142,7 +143,7 @@ export class ToastNotificationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.eventListener) {
-      window.removeEventListener('showToast', this.eventListener as EventListener);
+      window.removeEventListener('showToast', this.eventListener);
     }
   }
 
@@ -164,6 +165,16 @@ export class ToastNotificationComponent implements OnInit, OnDestroy {
 
   removeToast(id: string): void {
     this.toasts = this.toasts.filter(toast => toast.id !== id);
+  }
+
+  getIcon(type: string): string {
+    switch (type) {
+      case 'success': return '✅';
+      case 'error': return '❌';
+      case 'warning': return '⚠️';
+      case 'info': return 'ℹ️';
+      default: return '💬';
+    }
   }
 
   trackByFn(index: number, item: ToastMessage): string {
