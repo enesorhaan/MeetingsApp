@@ -116,7 +116,9 @@ namespace MeetingsApp.Api.Services
                 FilePath = meeting.FilePath,
                 CreatedByUserId = meeting.CreatedByUserId,
                 CreatedAt = meeting.CreatedAt,
-                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}"
+                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
+                IsCanceled = meeting.IsCanceled
             };
         }
 
