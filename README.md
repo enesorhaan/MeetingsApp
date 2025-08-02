@@ -1,4 +1,4 @@
-# 📅 Alpata Meetings App
+# 📅 Meetings App
 
 Modern ve kullanıcı dostu bir toplantı yönetim uygulaması. Angular 17 ile geliştirilmiş, .NET Core API backend'i ile entegre edilmiş tam özellikli bir web uygulaması.
 
@@ -222,7 +222,8 @@ Aşağıdaki klasörler `.gitignore` içerisine alınmıştır ve versiyon kontr
 
 Projede kullanılan tüm API uç noktalarını kolayca test edebilmeniz için Postman üzerinde hazırlanmış interaktif dokümantasyona aşağıdaki bağlantıdan ulaşabilirsiniz:
 
-🔗 **Postman API Documentation**
+🔗 **Postman API Documentation** 
+https://documenter.getpostman.com/view/29567242/2sB3BALsDr
 
 Giriş yapma, toplantı oluşturma, davet gönderme gibi işlemleri örnek verilerle test edebilirsiniz.
 
