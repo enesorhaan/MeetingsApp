@@ -72,13 +72,14 @@ export class AuthService {
       PhotoPath: registerRequest.profileImagePath
     };
     
-    return this.http.post<any>(`${this.apiUrl}/auth/register`, apiRequest)
+    return this.http.post(`${this.apiUrl}/auth/register`, apiRequest, { responseType: 'text' })
       .pipe(
-        map((response: any) => {
-          // API'den dönen response'da property'ler PascalCase olabilir
-          const fullName = response.fullName || response.FullName || `${registerRequest.firstName} ${registerRequest.lastName}`;
-          const email = response.email || response.Email || registerRequest.email;
-          const token = response.token || response.Token || 'temp-token';
+        map((response: string) => {
+          // API'den plain text döndüğü için response'u string olarak alıyoruz
+          // Başarılı kayıt durumunda kullanıcı bilgilerini oluşturalım
+          const fullName = `${registerRequest.firstName} ${registerRequest.lastName}`;
+          const email = registerRequest.email;
+          const token = 'temp-token'; // Register sonrası login gerekebilir
           
           return {
             fullName: fullName,

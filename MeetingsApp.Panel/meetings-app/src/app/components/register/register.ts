@@ -136,11 +136,14 @@ export class RegisterComponent {
     this.authService.register(registerData).subscribe({
       next: (response) => {
         console.log('Kayıt başarılı:', response);
+        this.isLoading = false;
+        this.uploadProgress = 0;
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Kayıt hatası:', err);
         this.isLoading = false;
+        this.uploadProgress = 0;
         
         if (err.status === 0) {
           this.errorMessage = 'Sunucuya bağlanılamıyor. Lütfen internet bağlantınızı kontrol edin.';
