@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { InviteModalComponent } from '../invite-modal/invite-modal';
   templateUrl: './meeting-detail-modal.html',
   styleUrl: './meeting-detail-modal.scss'
 })
-export class MeetingDetailModalComponent {
+export class MeetingDetailModalComponent implements OnInit, OnChanges {
   @Input() meeting: Meeting | null = null;
   @Input() isVisible = false;
   @Output() closeModal = new EventEmitter<void>();
@@ -27,7 +27,6 @@ export class MeetingDetailModalComponent {
   joinError = '';
   meetingDetails: any = null;
   cancelLoading = false; // İptal işlemi için loading
-  cancelSuccess = false; // İptal başarılı mesajı için
   showCancelConfirmation = false; // Onay dialogu için
   
   // Davet modal state'leri
@@ -47,9 +46,18 @@ export class MeetingDetailModalComponent {
   }
 
   ngOnInit(): void {
-    if (this.meeting) {
-      this.loadMeetingDetails();
-      this.setupFormForUser();
+    // Form'u kullanıcı bilgileriyle doldur
+    this.setupFormForUser();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible'] && changes['isVisible'].currentValue === true) {
+      // Modal açıldığında state'i temizle ve verileri yükle
+      this.resetState();
+      if (this.meeting) {
+        this.loadMeetingDetails();
+        this.setupFormForUser();
+      }
     }
   }
 
@@ -66,22 +74,31 @@ export class MeetingDetailModalComponent {
   }
 
   private loadMeetingDetails(): void {
-    if (!this.meeting?.publicLink) return;
-
-    // Public link'ten GUID'i çıkar
-    const guid = this.extractGuidFromLink(this.meeting.publicLink);
-    if (!guid) return;
+    if (!this.meeting?.id) return;
 
     this.loading = true;
-    this.meetingService.joinMeetingByLink(guid).subscribe({
-      next: (response) => {
-        this.meetingDetails = response;
+    this.error = '';
+
+    // Toplantı verilerini API'den yeniden yükle
+    this.meetingService.getMeetingById(this.meeting.id).subscribe({
+      next: (updatedMeeting) => {
+        this.meeting = updatedMeeting;
+        this.meetingDetails = updatedMeeting;
         this.loading = false;
       },
       error: (err) => {
         console.error('Toplantı detayları yüklenirken hata:', err);
-        this.error = 'Toplantı detayları yüklenemedi.';
         this.loading = false;
+        
+        if (err.status === 404) {
+          this.error = 'Toplantı bulunamadı veya iptal edilmiş.';
+          // Toplantı bulunamadıysa modal'ı kapat
+          setTimeout(() => {
+            this.closeModal.emit();
+          }, 2000);
+        } else {
+          this.error = 'Toplantı detayları yüklenirken bir hata oluştu.';
+        }
       }
     });
   }
@@ -145,32 +162,47 @@ export class MeetingDetailModalComponent {
 
     this.cancelLoading = true;
     this.error = '';
-    this.cancelSuccess = false;
 
     this.meetingService.cancelMeeting(this.meeting.id).subscribe({
       next: () => {
         this.cancelLoading = false;
-        this.cancelSuccess = true;
         
-        // 1 saniye sonra modal'ı kapat ve event emit et
-        setTimeout(() => {
-          this.meetingCancelled.emit(this.meeting!.id);
-          this.closeModal.emit();
-        }, 1000);
+        // Toast notification göster
+        window.dispatchEvent(new CustomEvent('showToast', {
+          detail: {
+            type: 'success',
+            message: 'Toplantı başarıyla iptal edildi!'
+          }
+        }));
+        
+        // Hemen modal'ı kapat ve dashboard'a yönlendir
+        this.meetingCancelled.emit(this.meeting!.id);
+        this.closeModal.emit();
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.error('Toplantı iptal hatası:', err);
         this.cancelLoading = false;
         
+        let errorMessage = 'Toplantı iptal edilirken bir hata oluştu.';
+        
         if (err.status === 404) {
-          this.error = 'Toplantı bulunamadı veya zaten iptal edilmiş.';
+          errorMessage = 'Toplantı bulunamadı veya zaten iptal edilmiş.';
         } else if (err.status === 401) {
-          this.error = 'Bu işlem için yetkiniz bulunmuyor.';
+          errorMessage = 'Bu işlem için yetkiniz bulunmuyor.';
         } else if (err.status === 0) {
-          this.error = 'API sunucusuna bağlanılamıyor.';
-        } else {
-          this.error = 'Toplantı iptal edilirken bir hata oluştu.';
+          errorMessage = 'API sunucusuna bağlanılamıyor.';
         }
+        
+        this.error = errorMessage;
+        
+        // Hata toast notification'ı da göster
+        window.dispatchEvent(new CustomEvent('showToast', {
+          detail: {
+            type: 'error',
+            message: errorMessage
+          }
+        }));
       }
     });
   }
@@ -206,6 +238,19 @@ export class MeetingDetailModalComponent {
 
   onCloseModal(): void {
     this.closeModal.emit();
+  }
+
+  private resetState(): void {
+    this.error = '';
+    this.joinError = '';
+    this.showCancelConfirmation = false;
+    this.cancelLoading = false;
+    this.joinLoading = false;
+    this.loading = false;
+    this.showInviteModal = false;
+    
+    // Form'u da temizle
+    this.joinForm.reset();
   }
 
   // Davet gönderme metodları

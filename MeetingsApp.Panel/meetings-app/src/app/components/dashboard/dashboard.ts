@@ -66,6 +66,8 @@ export class DashboardComponent implements OnInit {
   }
 
   onMeetingCancelled(meetingId: number): void {
+    // Toplantı iptal edildiğinde listeden kaldır
+    // Kullanıcı zaten dashboard'a yönlendirildiği için yenileme yapmaya gerek yok
     this.meetings = this.meetings.filter(m => m.id !== meetingId);
   }
 

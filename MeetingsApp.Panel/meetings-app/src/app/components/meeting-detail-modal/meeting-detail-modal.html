@@ -162,12 +162,6 @@
             </button>
           </div>
           
-          <!-- Success Message -->
-          <div class="success-message" *ngIf="cancelSuccess">
-            <div class="success-icon">✅</div>
-            <p>Toplantı başarıyla iptal edildi!</p>
-          </div>
-
           <!-- Error Message -->
           <div class="error-message" *ngIf="error">
             <div class="error-icon">❌</div>
@@ -175,7 +169,7 @@
           </div>
 
           <!-- Cancel Button -->
-          <div *ngIf="!cancelSuccess">
+          <div>
             <p class="warning-text">
               Bu toplantıyı iptal etmek istediğinizden emin misiniz? 
               Bu işlem geri alınamaz.
