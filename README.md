@@ -1,4 +1,4 @@
-# 📅 Alpata Meetings App
+# 📅 Meetings App
 
 Modern ve kullanıcı dostu bir toplantı yönetim uygulaması. Angular 17 ile geliştirilmiş, .NET Core API backend'i ile entegre edilmiş tam özellikli bir web uygulaması.
 
