@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
