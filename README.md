@@ -31,6 +31,11 @@ Modern ve kullanıcı dostu bir toplantı yönetim uygulaması. Angular 17 ile g
 - **Dosya İndirme**: Toplantı katılımcıları için dosya indirme
 - **Güvenli Erişim**: Yetkilendirme kontrollü dosya erişimi
 
+### 🧩 Veritabanı Özellikleri
+- **MSSQL Trigger**: Toplantı silme işlemlerinde otomatik log kaydı
+- **Background Worker**: İptal edilen toplantıların otomatik temizlenmesi
+- **Serilog Entegrasyonu**: Günlük uygulama logları
+
 ## 🛠️ Teknolojiler
 
 ### Frontend
@@ -46,10 +51,13 @@ Modern ve kullanıcı dostu bir toplantı yönetim uygulaması. Angular 17 ile g
 - **Entity Framework**: Veritabanı ORM
 - **JWT Authentication**: Güvenli kimlik doğrulama
 - **File Storage**: Dosya yönetimi sistemi
+- **Background Services**: Arka plan işlemleri
+- **Serilog**: Yapılandırılmış loglama
 
 ### Veritabanı
 - **SQL Server**: İlişkisel veritabanı
 - **Entity Framework Migrations**: Veritabanı şema yönetimi
+- **MSSQL Triggers**: Otomatik veri işlemleri
 
 ## 📦 Kurulum
 
@@ -136,6 +144,7 @@ export const environment = {
 
 ## 🏗️ Proje Yapısı
 
+### Frontend (Angular)
 ```
 meetings-app/
 ├── src/
@@ -160,6 +169,62 @@ meetings-app/
 │   └── styles.scss                 # Global stiller
 └── package.json
 ```
+
+### Backend (.NET Core)
+```
+MeetingsApp/
+├── Meetings.Api/                   # Ana API projesi
+│   ├── Controllers/                # API Controller'ları
+│   ├── Helpers/                    # Yardımcı sınıflar
+│   ├── Middleware/                 # Middleware'ler
+│   └── Services/                   # Business logic servisleri
+├── Meetings.Data/                  # Veri erişim katmanı
+│   ├── Context/                    # DbContext sınıfları
+│   └── Migrations/                 # EF Core migrations
+└── Meetings.Model/                 # Model katmanı
+    ├── Dtos/                       # Data Transfer Objects
+    ├── Entities/                   # Veritabanı entity'leri
+    └── Enums/                      # Enumeration'lar
+```
+
+## 🧩 Veritabanı Özellikleri
+
+### MSSQL Trigger
+Meetings tablosundan bir kayıt silindiğinde otomatik olarak MeetingLogs tablosuna log kaydı düşülür.
+
+```sql
+CREATE TRIGGER trg_AfterDeleteMeeting
+ON Meetings
+AFTER DELETE
+AS
+BEGIN
+    INSERT INTO MeetingLogs (MeetingId, DeletedAt)
+    SELECT Id, GETDATE() FROM DELETED
+END
+```
+
+### Background Worker
+`CanceledMeetingCleanupWorker` sınıfı, arka planda çalışan bir servis olarak yapılandırılmıştır.
+
+- **Çalışma Zamanı**: Her gün gece 03:00
+- **İşlev**: `IsCanceled = true` olan toplantı kayıtlarını tamamen siler
+- **Log Tutma**: Silinen kayıtların geçmişi MeetingLogs tablosunda tutulur
+- **Uygulama Logları**: Günlük olarak `logs/` klasörüne Serilog ile kaydedilir
+
+## 📁 Git Takibi Dışı Bırakılan Klasörler
+
+Aşağıdaki klasörler `.gitignore` içerisine alınmıştır ve versiyon kontrolüne dahil edilmez:
+
+- `MeetingsApp.Api/logs/` – Günlük log kayıtları
+- `MeetingsApp.Api/Upload/` – Kullanıcı tarafından yüklenen dosyalar
+
+## 🔌 Postman API Dokümantasyonu
+
+Projede kullanılan tüm API uç noktalarını kolayca test edebilmeniz için Postman üzerinde hazırlanmış interaktif dokümantasyona aşağıdaki bağlantıdan ulaşabilirsiniz:
+
+🔗 **Postman API Documentation**
+
+Giriş yapma, toplantı oluşturma, davet gönderme gibi işlemleri örnek verilerle test edebilirsiniz.
 
 ## 🔒 Güvenlik
 
@@ -191,16 +256,11 @@ ng build --configuration production
 3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
 4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
 5. Pull Request oluşturun
-
-## 📄 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
-
 ## 📞 İletişim
 
-- **Geliştirici**: [Adınız]
-- **Email**: [email@example.com]
-- **Proje Linki**: [https://github.com/username/alpata-meetings-app]
+- **Geliştirici**: Enes ORHAN
+- **Email**: enesorhan_1366@hotmail.com_
+- **Proje Linki**: https://github.com/enesorhaan/MeetingsApp
 
 ## 🙏 Teşekkürler
 
