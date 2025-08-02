@@ -226,8 +226,20 @@ export class MeetingDetailModalComponent implements OnInit, OnChanges {
 
   onDownloadFile(): void {
     if (this.meeting?.filePath) {
-      const fileUrl = this.meetingService.getFile(this.meeting.filePath);
-      window.open(fileUrl, '_blank');
+      // Dosya indirme işlemini async olarak yap
+      setTimeout(() => {
+        if (this.meeting?.filePath) {
+          const fileUrl = this.meetingService.getFile(this.meeting.filePath);
+          const link = document.createElement('a');
+          link.href = fileUrl;
+          link.target = '_blank';
+          const fileName = this.meeting.filePath.split('/').pop();
+          link.download = fileName || 'document';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }, 0);
     }
   }
 

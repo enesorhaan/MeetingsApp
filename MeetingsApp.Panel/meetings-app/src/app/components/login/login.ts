@@ -32,27 +32,16 @@ export class LoginComponent {
       this.isLoading = true;
       this.errorMessage = '';
 
-      console.log('Login form submitted:', this.loginForm.value);
-
-      this.authService.login(this.loginForm.value).subscribe({
+      const loginData = this.loginForm.value;
+      
+      this.authService.login(loginData).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
           this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
-          console.error('Login error:', error);
           this.isLoading = false;
-          
-          if (error.status === 0) {
-            this.errorMessage = 'API sunucusuna bağlanılamıyor. Lütfen API sunucusunun çalıştığından emin olun.';
-          } else if (error.status === 401) {
-            this.errorMessage = error.error || 'Email veya şifre hatalı.';
-          } else if (error.status === 400) {
-            this.errorMessage = 'Geçersiz istek. Lütfen bilgilerinizi kontrol edin.';
-          } else {
-            this.errorMessage = 'Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.';
-          }
+          this.errorMessage = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
         }
       });
     } else {

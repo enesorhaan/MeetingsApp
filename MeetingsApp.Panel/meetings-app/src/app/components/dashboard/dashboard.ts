@@ -58,7 +58,10 @@ export class DashboardComponent implements OnInit {
   }
 
   openJoinLinkModal(): void {
-    this.showJoinLinkModal = true;
+    // Bir sonraki tick'te modal'ı aç
+    setTimeout(() => {
+      this.showJoinLinkModal = true;
+    }, 0);
   }
 
   closeJoinLinkModal(): void {
@@ -144,11 +147,8 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(): void {
-    console.log('Logout butonu tıklandı');
     this.authService.logout();
-    console.log('AuthService logout çağrıldı');
     this.router.navigate(['/login']);
-    console.log('Login sayfasına yönlendirme yapıldı');
   }
 
   onImageError(event: any): void {

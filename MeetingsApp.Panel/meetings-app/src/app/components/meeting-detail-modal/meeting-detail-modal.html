@@ -147,20 +147,22 @@
           </div>
         </div>
 
+        <!-- Davet Gönderme Section (Debug için basitleştirildi) -->
+        <div class="invite-section" *ngIf="isAuthenticated()">
+          <hr>
+          <h4>📧 Davet Gönderme</h4>
+          <button 
+            class="invite-button"
+            (click)="onInviteClicked(); $event.stopPropagation()"
+          >
+            📧 Davet Gönder
+          </button>
+        </div>
+
         <!-- Cancel Meeting (Only for organizer and future meetings) -->
         <div class="cancel-section" *ngIf="isAuthenticated() && isOrganizer() && !meeting.isCanceled && (isFutureMeeting() || isOngoingMeeting())">
           <hr>
           <h4>⚠️ Toplantı Yönetimi</h4>
-          
-          <!-- Davet Gönderme Butonu -->
-          <div class="invite-section">
-            <button 
-              class="invite-button"
-              (click)="onInviteClicked(); $event.stopPropagation()"
-            >
-              📧 Davet Gönder
-            </button>
-          </div>
           
           <!-- Error Message -->
           <div class="error-message" *ngIf="error">

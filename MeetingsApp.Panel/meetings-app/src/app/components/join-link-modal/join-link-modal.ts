@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './join-link-modal.html',
   styleUrl: './join-link-modal.scss'
 })
-export class JoinLinkModalComponent {
+export class JoinLinkModalComponent implements OnChanges, OnInit {
   @Input() isVisible = false;
   @Output() closeModal = new EventEmitter<void>();
 
@@ -25,6 +25,20 @@ export class JoinLinkModalComponent {
     this.joinForm = this.fb.group({
       meetingLink: ['', [Validators.required, this.linkValidator()]]
     });
+  }
+
+  ngOnInit(): void {
+    // Component initialized
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isVisible']) {
+      if (changes['isVisible'].currentValue === true) {
+        this.joinForm.reset();
+        this.error = '';
+        this.loading = false;
+      }
+    }
   }
 
   onCloseModal(): void {
