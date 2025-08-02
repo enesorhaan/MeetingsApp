@@ -60,12 +60,11 @@
               olarak katılacaksınız.
             </p>
             <button 
-              class="join-button primary" 
-              (click)="onJoinMeeting()"
-              [disabled]="joinLoading"
+              class="action-button primary"
+              (click)="joinMeeting(); $event.stopPropagation()"
+              *ngIf="!isCompletedMeeting() && !meeting.isCanceled"
             >
-              <span *ngIf="!joinLoading">🚀 Toplantıya Katıl</span>
-              <span *ngIf="joinLoading">Katılıyor...</span>
+              🚀 Toplantıya Katıl
             </button>
           </div>
 

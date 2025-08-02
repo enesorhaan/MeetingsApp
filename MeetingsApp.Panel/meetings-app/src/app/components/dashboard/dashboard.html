@@ -40,10 +40,6 @@
     <div class="meetings-section">
       <h2>Toplantılar</h2>
       
-      <div class="error-message" *ngIf="error">
-        {{ error }}
-      </div>
-
       <div class="loading-spinner" *ngIf="loading">
         <div class="spinner"></div>
         <p>Toplantılar yükleniyor...</p>
@@ -52,14 +48,13 @@
       <div class="meetings-grid">
         <div 
           class="meeting-card" 
-          *ngFor="let meeting of meetings"
-          [class.cancelled]="meeting.isCanceled"
-          (click)="openMeetingModal(meeting)"
+          *ngFor="let meeting of meetings; trackBy: trackByMeetingId"
+          (click)="openMeetingDetail(meeting)"
         >
           <div class="meeting-header">
             <h3>{{ meeting.title }}</h3>
             <span class="meeting-status" [class]="getMeetingStatusClass(meeting)">
-              {{ getMeetingStatus(meeting) }}
+              {{ getMeetingStatusText(meeting) }}
             </span>
           </div>
           
@@ -93,14 +88,14 @@
           <div class="meeting-actions" *ngIf="!meeting.isCanceled">
             <button 
               class="action-button primary"
-              (click)="openMeetingModal(meeting); $event.stopPropagation()"
+              (click)="openMeetingDetail(meeting); $event.stopPropagation()"
             >
               👁️ Detaylar
             </button>
             
             <button 
               class="action-button secondary"
-              (click)="joinMeetingByLink(); $event.stopPropagation()"
+              (click)="joinMeetingFromCard(meeting); $event.stopPropagation()"
               *ngIf="!isCompletedMeeting(meeting)"
             >
               🚀 Katıl
@@ -109,13 +104,19 @@
         </div>
       </div>
 
+      <!-- Join Link Modal -->
+      <app-join-link-modal 
+        [isVisible]="showJoinLinkModal"
+        (closeModal)="closeJoinLinkModal()"
+      />
+
       <!-- Meeting Detail Modal -->
       <app-meeting-detail-modal
         [meeting]="selectedMeeting"
-        [isVisible]="isModalVisible"
-        (closeModal)="closeModal()"
+        [isVisible]="showDetailModal"
+        (closeModal)="closeMeetingDetail()"
         (meetingCancelled)="onMeetingCancelled($event)"
-      ></app-meeting-detail-modal>
+      />
 
       <div class="no-meetings" *ngIf="!loading && meetings.length === 0">
         <p>Henüz hiç toplantı bulunmuyor.</p>

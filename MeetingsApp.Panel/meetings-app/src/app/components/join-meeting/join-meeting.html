@@ -1,0 +1,151 @@
+<div class="join-meeting-container">
+  <div class="join-meeting-card">
+    <!-- Loading -->
+    <div class="loading-spinner" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Toplantı bilgileri yükleniyor...</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-section" *ngIf="error && !loading">
+      <div class="error-icon">❌</div>
+      <h2>Toplantı Bulunamadı</h2>
+      <p>{{ error }}</p>
+      <button class="back-button" (click)="router.navigate(['/dashboard'])">
+        🏠 Ana Sayfaya Dön
+      </button>
+    </div>
+
+    <!-- Meeting Details -->
+    <div class="meeting-section" *ngIf="meetingDetails && !loading">
+      <div class="meeting-header">
+        <div class="meeting-icon">🎯</div>
+        <h1>Toplantıya Katıl</h1>
+        <p class="meeting-subtitle">Toplantı bilgilerinizi girerek katılım sağlayın</p>
+      </div>
+
+      <div class="meeting-info">
+        <h2>{{ meetingDetails.title }}</h2>
+        <p class="meeting-description">{{ meetingDetails.description }}</p>
+        
+        <div class="meeting-meta">
+          <div class="meta-item">
+            <span class="label">📅 Başlangıç:</span>
+            <span>{{ formatDateTime(meetingDetails.startTime) }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">⏰ Bitiş:</span>
+            <span>{{ formatDateTime(meetingDetails.endTime) }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">⏱️ Süre:</span>
+            <span>{{ meetingDetails.durationInMinutes }} dakika</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Join Form -->
+      <div class="join-form-section">
+        <h3>👤 Katılım Bilgileri</h3>
+        
+        <!-- Authenticated User -->
+        <div *ngIf="isAuthenticated" class="authenticated-user">
+          <div class="user-info">
+            <div class="user-avatar">
+              <span class="avatar-icon">👤</span>
+            </div>
+            <div class="user-details">
+              <p class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+              <p class="user-email">{{ currentUser?.email }}</p>
+            </div>
+          </div>
+          <p class="join-message">Bu bilgilerle toplantıya katılacaksınız.</p>
+          <button 
+            class="join-button primary" 
+            (click)="onSubmit()"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">🚀 Toplantıya Katıl</span>
+            <span *ngIf="loading">⏳ Katılıyor...</span>
+          </button>
+        </div>
+
+        <!-- Guest User -->
+        <div *ngIf="!isAuthenticated" class="guest-user">
+          <p class="guest-info">
+            Misafir olarak katılmak için bilgilerinizi girin veya 
+            <a href="#" (click)="onLogin(); $event.preventDefault()">giriş yapın</a>.
+          </p>
+          
+          <form [formGroup]="joinForm" (ngSubmit)="onSubmit()" class="join-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">Ad *</label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  formControlName="firstName"
+                  placeholder="Adınız"
+                  [class.error]="joinForm.get('firstName')?.invalid && joinForm.get('firstName')?.touched"
+                />
+                <div class="error-message" *ngIf="joinForm.get('firstName')?.invalid && joinForm.get('firstName')?.touched">
+                  <span *ngIf="joinForm.get('firstName')?.errors?.['required']">Ad gereklidir</span>
+                  <span *ngIf="joinForm.get('firstName')?.errors?.['minlength']">Ad en az 2 karakter olmalıdır</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Soyad *</label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  formControlName="lastName"
+                  placeholder="Soyadınız"
+                  [class.error]="joinForm.get('lastName')?.invalid && joinForm.get('lastName')?.touched"
+                />
+                <div class="error-message" *ngIf="joinForm.get('lastName')?.invalid && joinForm.get('lastName')?.touched">
+                  <span *ngIf="joinForm.get('lastName')?.errors?.['required']">Soyad gereklidir</span>
+                  <span *ngIf="joinForm.get('lastName')?.errors?.['minlength']">Soyad en az 2 karakter olmalıdır</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                placeholder="Email adresiniz"
+                [class.error]="joinForm.get('email')?.invalid && joinForm.get('email')?.touched"
+              />
+              <div class="error-message" *ngIf="joinForm.get('email')?.invalid && joinForm.get('email')?.touched">
+                <span *ngIf="joinForm.get('email')?.errors?.['required']">Email gereklidir</span>
+                <span *ngIf="joinForm.get('email')?.errors?.['email']">Geçerli bir email adresi giriniz</span>
+              </div>
+            </div>
+
+            <div class="join-actions">
+              <button 
+                type="submit" 
+                class="join-button primary"
+                [disabled]="joinForm.invalid || loading"
+              >
+                <span *ngIf="!loading">👤 Misafir Olarak Katıl</span>
+                <span *ngIf="loading">⏳ Katılıyor...</span>
+              </button>
+              
+              <button 
+                type="button" 
+                class="join-button secondary"
+                (click)="onLogin()"
+              >
+                🔐 Giriş Yap
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,19 +1,16 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth-guard';
+import { DashboardComponent } from './components/dashboard/dashboard';
+import { MeetingFormComponent } from './components/meeting-form/meeting-form';
+import { LoginComponent } from './components/login/login';
+import { RegisterComponent } from './components/register/register';
+import { JoinMeetingComponent } from './components/join-meeting/join-meeting';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', loadComponent: () => import('./components/login/login').then(m => m.LoginComponent) },
-  { path: 'register', loadComponent: () => import('./components/register/register').then(m => m.RegisterComponent) },
-  { 
-    path: 'dashboard', 
-    loadComponent: () => import('./components/dashboard/dashboard').then(m => m.DashboardComponent),
-    canActivate: [authGuard]
-  },
-  { 
-    path: 'meeting-form', 
-    loadComponent: () => import('./components/meeting-form/meeting-form').then(m => m.MeetingFormComponent),
-    canActivate: [authGuard]
-  },
-  { path: '**', redirectTo: '/login' }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'meeting-form', component: MeetingFormComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'meeting/join/:guid', component: JoinMeetingComponent },
+  { path: '**', redirectTo: '/dashboard' }
 ];

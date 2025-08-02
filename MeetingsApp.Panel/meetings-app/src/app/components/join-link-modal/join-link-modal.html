@@ -1,0 +1,63 @@
+<div class="join-link-modal-overlay" *ngIf="isVisible" (click)="onCloseModal()">
+  <div class="join-link-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon">🔗</div>
+      <h2>Toplantıya Katıl</h2>
+      <p class="modal-subtitle">Toplantı linkini girerek katılım sağlayın</p>
+      <button class="close-button" (click)="onCloseModal()">×</button>
+    </div>
+
+    <div class="modal-content">
+      <form [formGroup]="joinForm" (ngSubmit)="onSubmit()" class="join-form">
+        <div class="form-group">
+          <label for="meetingLink">Toplantı Linki *</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="meetingLink" 
+              formControlName="meetingLink"
+              placeholder="http://localhost:5016/meeting/join/..."
+              [class.error]="joinForm.get('meetingLink')?.invalid && joinForm.get('meetingLink')?.touched"
+              (paste)="onPaste($event)"
+            />
+            <div class="input-icon">🔗</div>
+          </div>
+          <div class="error-message" *ngIf="joinForm.get('meetingLink')?.invalid && joinForm.get('meetingLink')?.touched">
+            <span *ngIf="joinForm.get('meetingLink')?.errors?.['required']">Toplantı linki gereklidir</span>
+            <span *ngIf="joinForm.get('meetingLink')?.errors?.['invalidLink']">Geçerli bir toplantı linki giriniz</span>
+          </div>
+          <div class="error-message" *ngIf="error">
+            {{ error }}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="action-button secondary"
+            (click)="onCloseModal()"
+          >
+            ❌ İptal
+          </button>
+          <button 
+            type="submit" 
+            class="action-button primary"
+            [disabled]="joinForm.invalid || loading"
+          >
+            <span *ngIf="!loading">🚀 Katıl</span>
+            <span *ngIf="loading">⏳ Katılıyor...</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="help-section">
+        <h4>💡 Nasıl Kullanılır?</h4>
+        <ul>
+          <li>Toplantı organizatöründen aldığınız linki yapıştırın</li>
+          <li>Link formatı: <code>http://localhost:5016/meeting/join/[GUID]</code></li>
+          <li>Veya sadece GUID kısmını da girebilirsiniz</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -5,155 +5,88 @@ import { MeetingService } from '../../services/meeting';
 import { AuthService } from '../../services/auth';
 import { Meeting } from '../../models/meeting.model';
 import { MeetingDetailModalComponent } from '../meeting-detail-modal/meeting-detail-modal';
+import { JoinLinkModalComponent } from '../join-link-modal/join-link-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MeetingDetailModalComponent],
+  imports: [CommonModule, MeetingDetailModalComponent, JoinLinkModalComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
 export class DashboardComponent implements OnInit {
   meetings: Meeting[] = [];
   loading = false;
-  error = '';
+  showDetailModal = false;
   selectedMeeting: Meeting | null = null;
-  isModalVisible = false;
+  showJoinLinkModal = false;
 
   constructor(
-    public meetingService: MeetingService, // Made public for template access
-    public authService: AuthService, // Made public for template access
+    public meetingService: MeetingService,
+    public authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Token kontrolü
-    const token = this.authService.getToken();
-    if (!token || token === 'temp-token') {
-      console.log('Token bulunamadı veya geçici token. Login sayfasına yönlendiriliyor.');
-      this.router.navigate(['/login']);
-      return;
-    }
-    
-    console.log('Token mevcut, toplantılar yükleniyor...');
     this.loadMeetings();
   }
 
-  // Image error handler
-  onImageError(event: any): void {
-    console.log('Image load error, using default avatar');
-    event.target.style.display = 'none';
-    event.target.nextElementSibling.style.display = 'flex';
-  }
-
   loadMeetings(): void {
-    this.loading = true;
-    this.error = '';
-
-    this.meetingService.getMeetings().subscribe({
-      next: (meetings) => {
-        this.meetings = meetings;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading meetings:', error);
-        this.loading = false;
-        
-        if (error.status === 401) {
-          this.error = 'Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.';
-          this.authService.logout();
-          this.router.navigate(['/login']);
-        } else {
-          this.error = 'Toplantılar yüklenirken bir hata oluştu.';
+    if (this.authService.isAuthenticated()) {
+      this.loading = true;
+      this.meetingService.getMeetings().subscribe({
+        next: (meetings) => {
+          this.meetings = meetings;
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Toplantılar yüklenirken hata:', error);
+          this.loading = false;
         }
-      }
-    });
+      });
+    }
   }
 
-  // Modal işlemleri
-  openMeetingModal(meeting: Meeting): void {
+  openMeetingDetail(meeting: Meeting): void {
     this.selectedMeeting = meeting;
-    this.isModalVisible = true;
+    this.showDetailModal = true;
   }
 
-  closeModal(): void {
-    this.isModalVisible = false;
+  closeMeetingDetail(): void {
+    this.showDetailModal = false;
     this.selectedMeeting = null;
   }
 
-  onMeetingCancelled(meetingId: number): void {
-    // İptal edilen toplantıyı listede güncelle (kaldırmak yerine)
-    const meetingIndex = this.meetings.findIndex(m => m.id === meetingId);
-    if (meetingIndex !== -1) {
-      this.meetings[meetingIndex].isCanceled = true;
-    }
+  openJoinLinkModal(): void {
+    this.showJoinLinkModal = true;
   }
 
-  createMeeting(): void {
-    this.router.navigate(['/meeting-form']);
+  closeJoinLinkModal(): void {
+    this.showJoinLinkModal = false;
+  }
+
+  onMeetingCancelled(meetingId: number): void {
+    this.meetings = this.meetings.filter(m => m.id !== meetingId);
   }
 
   joinMeetingByLink(): void {
-    const link = prompt('Toplantı linkini girin:');
-    if (link) {
+    this.openJoinLinkModal();
+  }
+
+  joinMeetingFromCard(meeting: Meeting): void {
+    if (meeting.publicLink) {
       // Link'ten GUID'i çıkar
-      const guid = link.split('/').pop();
+      const guid = meeting.publicLink.split('/').pop();
       if (guid) {
-        this.meetingService.joinMeetingByLink(guid).subscribe({
-          next: (response) => {
-            alert(`Toplantıya katıldınız: ${response.title}`);
-            this.loadMeetings();
-          },
-          error: (error) => {
-            alert('Toplantıya katılırken hata oluştu.');
-          }
-        });
+        this.router.navigate(['/meeting/join', guid]);
       }
     }
   }
 
-  inviteToMeeting(meeting: Meeting): void {
-    // This function is no longer needed as invite modal state is removed
-    // The logic for inviting users should be handled by the meeting detail modal
-    // or a separate invite functionality if needed.
-    console.log('Invite to meeting functionality is temporarily disabled.');
-    // For now, we'll just open the meeting detail modal
-    this.openMeetingModal(meeting);
-  }
-
-  onInviteModalClose(): void {
-    // This function is no longer needed
-  }
-
-  onInvitationsSent(): void {
-    // This function is no longer needed
-  }
-
-  isOrganizer(meeting: Meeting): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser?.id === meeting.createdByUserId;
-  }
-
-  formatDateTime(dateTime: string): string {
-    return new Date(dateTime).toLocaleString('tr-TR');
-  }
-
-  getMeetingStatus(meeting: Meeting): string {
-    if (meeting.isCanceled) {
-      return 'İptal Edildi';
-    }
-    
+  isCompletedMeeting(meeting: Meeting): boolean {
     const now = new Date();
-    const startTime = new Date(meeting.startTime);
     const endTime = new Date(meeting.endTime);
-    
-    if (now < startTime) {
-      return 'Yaklaşıyor';
-    } else if (now >= startTime && now <= endTime) {
-      return 'Devam Ediyor';
-    } else {
-      return 'Tamamlandı';
-    }
+    return now > endTime;
   }
 
   getMeetingStatusClass(meeting: Meeting): string {
@@ -174,14 +107,47 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  isCompletedMeeting(meeting: Meeting): boolean {
+  getMeetingStatusText(meeting: Meeting): string {
+    if (meeting.isCanceled) {
+      return 'İptal Edildi';
+    }
+    
     const now = new Date();
+    const startTime = new Date(meeting.startTime);
     const endTime = new Date(meeting.endTime);
-    return now > endTime;
+    
+    if (now < startTime) {
+      return 'Yaklaşan';
+    } else if (now >= startTime && now <= endTime) {
+      return 'Devam Ediyor';
+    } else {
+      return 'Tamamlandı';
+    }
+  }
+
+  formatDateTime(dateTime: string): string {
+    return new Date(dateTime).toLocaleString('tr-TR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  createMeeting(): void {
+    this.router.navigate(['/meeting-form']);
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+  }
+
+  onImageError(event: any): void {
+    event.target.style.display = 'none';
+  }
+
+  trackByMeetingId(index: number, meeting: Meeting): number {
+    return meeting.id;
   }
 }

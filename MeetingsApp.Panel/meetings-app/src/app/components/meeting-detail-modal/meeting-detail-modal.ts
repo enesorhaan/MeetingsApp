@@ -268,4 +268,14 @@ export class MeetingDetailModalComponent {
     const endTime = new Date(this.meeting.endTime);
     return now >= startTime && now <= endTime;
   }
+
+  joinMeeting(): void {
+    if (this.meeting?.publicLink) {
+      // Link'ten GUID'i çıkar
+      const guid = this.meeting.publicLink.split('/').pop();
+      if (guid) {
+        this.router.navigate(['/meeting/join', guid]);
+      }
+    }
+  }
 }

@@ -1,0 +1,361 @@
+.join-meeting-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.join-meeting-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 60px 40px;
+  color: #666;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.error-section {
+  text-align: center;
+  padding: 60px 40px;
+  color: #d32f2f;
+
+  .error-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin: 0 0 16px 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 30px 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+  }
+
+  .back-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+  }
+}
+
+.meeting-section {
+  padding: 40px;
+}
+
+.meeting-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .meeting-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .meeting-subtitle {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+  }
+}
+
+.meeting-info {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+
+  h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .meeting-description {
+    margin: 0 0 20px 0;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .meeting-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+
+      .label {
+        font-weight: 600;
+        color: #333;
+      }
+
+      span:last-child {
+        color: #666;
+      }
+    }
+  }
+}
+
+.join-form-section {
+  h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.authenticated-user {
+  text-align: center;
+  padding: 24px;
+  background: #e8f5e8;
+  border-radius: 12px;
+  border: 1px solid #c3e6cb;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      background: #28a745;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .avatar-icon {
+        font-size: 24px;
+        color: white;
+      }
+    }
+
+    .user-details {
+      text-align: left;
+
+      .user-name {
+        margin: 0 0 4px 0;
+        font-weight: 600;
+        color: #333;
+        font-size: 16px;
+      }
+
+      .user-email {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .join-message {
+    margin: 0 0 20px 0;
+    color: #155724;
+    font-size: 14px;
+  }
+}
+
+.guest-user {
+  .guest-info {
+    margin: 0 0 20px 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+
+    a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.join-form {
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      &.error {
+        border-color: #d32f2f;
+      }
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+
+    .error-message {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #d32f2f;
+    }
+  }
+}
+
+.join-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.join-button {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &.secondary {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #e0e0e0;
+
+    &:hover {
+      background: #e9ecef;
+      border-color: #667eea;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .join-meeting-container {
+    padding: 10px;
+  }
+
+  .meeting-section {
+    padding: 20px;
+  }
+
+  .join-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .join-actions {
+    flex-direction: column;
+  }
+} 
