@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, S
 import { CommonModule } from '@angular/common';
 import { MeetingService } from '../../services/meeting';
 import { Meeting, MeetingInvitationDto } from '../../models/meeting.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-invite-modal',
@@ -72,13 +73,30 @@ export class InviteModalComponent implements OnInit, OnDestroy, OnChanges {
 
   copyMeetingLink(): void {
     if (this.meeting?.publicLink) {
-      navigator.clipboard.writeText(this.meeting.publicLink).then(() => {
+      const frontendLink = this.convertToFrontendLink(this.meeting.publicLink);
+      navigator.clipboard.writeText(frontendLink).then(() => {
         this.showCopyToast = true;
         setTimeout(() => {
           this.showCopyToast = false;
         }, 3000);
       });
     }
+  }
+
+  private convertToFrontendLink(backendLink: string): string {
+    // Backend URL'sini frontend URL'sine dönüştür
+    const guid = backendLink.split('/').pop();
+    if (guid) {
+      return `${environment.frontendUrl}/meeting/join/${guid}`;
+    }
+    return backendLink;
+  }
+
+  getFrontendLink(): string {
+    if (this.meeting?.publicLink) {
+      return this.convertToFrontendLink(this.meeting.publicLink);
+    }
+    return '';
   }
 
   onSubmit(): void {
