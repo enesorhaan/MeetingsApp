@@ -121,6 +121,7 @@ namespace MeetingsApp.Api.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("join/{guid}")]
         public async Task<IActionResult> JoinMeeting(Guid guid)
         {
