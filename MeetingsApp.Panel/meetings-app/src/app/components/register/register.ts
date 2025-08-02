@@ -131,7 +131,6 @@ export class RegisterComponent {
     };
 
     console.log('Kayıt işlemi başlatılıyor:', registerData);
-    console.log('API URL:', 'http://localhost:5016/api/auth/register');
 
     this.authService.register(registerData).subscribe({
       next: (response) => {

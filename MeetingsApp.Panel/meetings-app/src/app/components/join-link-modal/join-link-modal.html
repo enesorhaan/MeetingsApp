@@ -16,7 +16,7 @@
               type="text" 
               id="meetingLink" 
               formControlName="meetingLink"
-              placeholder="http://localhost:5016/meeting/join/..."
+              placeholder="https://meetingsapp-q4jt.onrender.com/meeting/join/..."
               [class.error]="joinForm.get('meetingLink')?.invalid && joinForm.get('meetingLink')?.touched"
               (paste)="onPaste($event)"
             />
@@ -54,7 +54,7 @@
         <h4>💡 Nasıl Kullanılır?</h4>
         <ul>
           <li>Toplantı organizatöründen aldığınız linki yapıştırın</li>
-          <li>Link formatı: <code>http://localhost:5016/meeting/join/[GUID]</code></li>
+                      <li>Link formatı: <code>https://meetingsapp-q4jt.onrender.com/meeting/join/[GUID]</code></li>
           <li>Veya sadece GUID kısmını da girebilirsiniz</li>
         </ul>
       </div>
