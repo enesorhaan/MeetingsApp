@@ -119,12 +119,13 @@ app.UseCors("CorsPolicy");
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => 
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
-    });
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeetingsApp API V1");
+});
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseMiddleware<HeartBeatMiddleware>();
@@ -144,5 +145,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", () => "Hello, this is MeetingsApp Service!");
 
 app.Run();
