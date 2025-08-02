@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
+using DotNetEnv;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -21,6 +22,10 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+// .env dosyasýný yükle
+DotNetEnv.Env.Load();
+
 
 // Serilog
 builder.Host.UseSerilog();
@@ -45,7 +50,20 @@ builder.Services.AddCors(options =>
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 var tokenSettings = builder.Configuration.GetSection("TokenSettings").Get<TokenSettings>();
 
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+//builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+// Ortam deðiþkenlerinden EmailSettings'i doldur
+builder.Services.Configure<EmailSettings>(options =>
+{
+    options.Host = Environment.GetEnvironmentVariable("SMTP_HOST");
+    options.Port = int.Parse(Environment.GetEnvironmentVariable("SMTP_PORT") ?? "587");
+    options.UserName = Environment.GetEnvironmentVariable("SMTP_USERNAME");
+    options.Password = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+    options.EnableSsl = bool.Parse(Environment.GetEnvironmentVariable("SMTP_ENABLESSL") ?? "true");
+    options.SenderEmail = Environment.GetEnvironmentVariable("SMTP_SENDEREMAIL");
+    options.SenderName = Environment.GetEnvironmentVariable("SMTP_SENDERNAME");
+});
+
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddAuthentication(options =>
