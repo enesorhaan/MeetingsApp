@@ -129,9 +129,11 @@ export class AuthService {
   }
 
   logout(): void {
+    console.log('AuthService logout başladı');
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    console.log('AuthService logout tamamlandı - token ve user temizlendi');
   }
 
   getToken(): string | null {

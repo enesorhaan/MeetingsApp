@@ -66,9 +66,11 @@ export class DashboardComponent implements OnInit {
   }
 
   onMeetingCancelled(meetingId: number): void {
-    // Toplantı iptal edildiğinde listeden kaldır
-    // Kullanıcı zaten dashboard'a yönlendirildiği için yenileme yapmaya gerek yok
-    this.meetings = this.meetings.filter(m => m.id !== meetingId);
+    // İptal edilen toplantıyı listede güncelle
+    const meetingIndex = this.meetings.findIndex(m => m.id === meetingId);
+    if (meetingIndex !== -1) {
+      this.meetings[meetingIndex].isCanceled = true;
+    }
   }
 
   joinMeetingByLink(): void {
@@ -142,7 +144,11 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(): void {
+    console.log('Logout butonu tıklandı');
     this.authService.logout();
+    console.log('AuthService logout çağrıldı');
+    this.router.navigate(['/login']);
+    console.log('Login sayfasına yönlendirme yapıldı');
   }
 
   onImageError(event: any): void {
