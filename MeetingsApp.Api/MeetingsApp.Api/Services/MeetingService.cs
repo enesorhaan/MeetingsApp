@@ -11,12 +11,14 @@ namespace MeetingsApp.Api.Services
     {
         private readonly AppDbContext _context;
         private readonly string _baseDomain;
+        private readonly string _frontendDomain;
         private readonly IEmailService _emailService;
 
         public MeetingService(AppDbContext context, IOptions<AppSettings> appSettings, IEmailService emailService)
         {
             _context = context;
             _baseDomain = appSettings.Value.BaseDomain;
+            _frontendDomain = appSettings.Value.FrontendDomain;
             _emailService = emailService;
         }
 
@@ -33,7 +35,7 @@ namespace MeetingsApp.Api.Services
                     FilePath = meeting.FilePath,
                     CreatedByUserId = meeting.CreatedByUserId,
                     CreatedAt = meeting.CreatedAt,
-                    PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                    PublicLink = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}",
                     DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
                     IsCanceled = meeting.IsCanceled
                 }).ToListAsync();
@@ -54,7 +56,7 @@ namespace MeetingsApp.Api.Services
                     FilePath = meeting.FilePath,
                     CreatedByUserId = meeting.CreatedByUserId,
                     CreatedAt = meeting.CreatedAt,
-                    PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                    PublicLink = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}",
                     DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
                     IsCanceled = meeting.IsCanceled
                 })
@@ -78,7 +80,7 @@ namespace MeetingsApp.Api.Services
                 FilePath = meeting.FilePath,
                 CreatedByUserId = meeting.CreatedByUserId,
                 CreatedAt = meeting.CreatedAt,
-                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                PublicLink = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}",
                 DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
                 IsCanceled = meeting.IsCanceled
             };
@@ -116,7 +118,7 @@ namespace MeetingsApp.Api.Services
                 FilePath = meeting.FilePath,
                 CreatedByUserId = meeting.CreatedByUserId,
                 CreatedAt = meeting.CreatedAt,
-                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}",
+                PublicLink = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}",
                 DurationInMinutes = (int)(meeting.EndTime - meeting.StartTime).TotalMinutes,
                 IsCanceled = meeting.IsCanceled
             };
@@ -188,7 +190,7 @@ namespace MeetingsApp.Api.Services
                 FilePath = meeting.FilePath,
                 CreatedByUserId = meeting.CreatedByUserId,
                 CreatedAt = meeting.CreatedAt,
-                PublicLink = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}"
+                PublicLink = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}"
             };
         }
 
@@ -198,7 +200,7 @@ namespace MeetingsApp.Api.Services
             if (meeting == null)
                 throw new Exception("Toplantı bulunamadı.");
 
-            var link = $"{_baseDomain}/meeting/join/{meeting.PublicLinkGuid}";
+            var link = $"{_frontendDomain}/meeting/join/{meeting.PublicLinkGuid}";
 
             foreach (var email in emailList.Distinct())
             {
